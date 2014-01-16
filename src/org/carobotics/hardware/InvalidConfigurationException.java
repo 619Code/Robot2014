@@ -1,0 +1,10 @@
+package org.carobotics.hardware;
+
+/**
+ * @author CaRobotics
+ */
+public class InvalidConfigurationException extends Exception{
+    public InvalidConfigurationException(String message){
+        super(message);
+    }
+}

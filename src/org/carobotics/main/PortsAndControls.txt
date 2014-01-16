@@ -1,0 +1,86 @@
+********************************************************************************
+*** THIS IS WHERE ALL PORTS AND JOYSTICK CONTROLS SHOULD BE DOCUMENTED       ***
+********************************************************************************
+
+********************************************************************************
+*** JOYSTICK CONTROLS                                                        ***
+********************************************************************************
+
+*** JOYSTICK 1 - LEFT JOYSTICK                                               ***
+Y Axis      - Left wheel
+
+*** JOYSTICK 2 - RIGHT JOYSTICK                                              ***
+Y Axis      - Right wheel
+Throttle    - Scale percent adjustment for both drive wheels (joy 1 and joy 2)
+Button 11   - Override; press to allow opening of both wrists, hands
+
+*** JOYSTICK 3 - JOINTS/CLAW JOYSTICK                                        ***
+Y Axis      - Claw/joints manual control <- enabled by pressing buttons below
+Trigger     - Arms manual control
+Button 2    - Legs manual control
+Button 3    - Wrists manual control
+Button 4    - Left wrist manual control (use with caution!)
+Button 5    - Right wrist manual control (use with caution!)
+Button 6    - Right foot manual control
+Button 7    - Left foot manual control
+Button 8    - Toggle open/close feet
+Button 9    - Toggle open/close hands
+Button 10   - Left foot manual control
+Button 11   - Right foot manual control
+
+
+
+*** JOYSTICK 4 - JOINTS/DUMPER JOYSTICK                                      ***
+Y Axis      - Dumper/joints manual control <- enabled by pressing buttons below
+Throttle    - Manual control scale for joysticks 3 and 4
+Trigger     - Arms manual control
+Button 2    - Legs manual control
+Button 3    - Wrists manual control
+Button 4    - Left wrist manual control (use with caution!)
+Button 5    - Right wrist manual control (use with caution!)
+Button 6    - [TODO] Collect?
+Button 7    - [TODO] Collect?
+Button 8    - Dumper manual control
+Button 9    - Disc lock/unlock toggle
+Button 10   - Disable joint PIDs <- use this if the joints are going crazy
+Button 11   - Enable joint PIDs (enabled by default)
+
+
+********************************************************************************
+*** PORTS                                                                    ***
+********************************************************************************
+
+*** Analog Module 1                                                          ***
+
+*** Digital Sidecar                                                          ***
+PWM 1       - Arms
+PWM 2       - Legs
+PWM 3       - Left Wrist
+PWM 4       - Right Wrist
+PWM 5       - Dumper
+PWM 6       - Dumper Servo
+
+DIO 1       - DIP: Autonomous OFF: Disable  ON: Enable
+DIO 2       - DIP: Autonomous OFF: No delay ON: 5 sec delay
+DIO 3       - DIP: Autonomous OFF: Straight ON: Turn
+DIO 4       - DIP: Enable PID stuff
+DIO 5       - Left foot open position limit switch
+DIO 6       - Right foot open position limit switch+
+DIO 7       - Left hand open position limit switch
+DIO 8       - Right hand open position limit switch
+DIO 9       - Dumper lid limit switch
+
+*** Analog Module 4                                                          ***
+
+AIN 1       - Shoulder potentiometer
+AIN 2       - Hip potentiometer
+AIN 3       - Left wrist potentiometer
+AIN 4       - Right wrist potentiometer
+
+*** Jaguar CAN IDs                                                           ***
+CAN 2       - Left wheel
+CAN 3       - Right wheel
+CAN 4       - Hand gripper LEFT
+CAN 5       - Hand gripper RIGHT
+CAN 6       - Feet gripper LEFT
+CAN 7       - Feet gripper RIGHT
