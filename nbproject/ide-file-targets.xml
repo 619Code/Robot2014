@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project basedir=".." name="RobotCode2013-IDE">
+<?xml version="1.0" encoding="UTF-8"?><project basedir=".." name="RobotCode2014-IDE">
     <property file="${user.home}/.sunspotfrc.properties"/>
     <property file="build.properties"/>
     <property file="${sunspot.home}/default.properties"/>
