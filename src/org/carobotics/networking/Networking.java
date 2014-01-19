@@ -35,7 +35,7 @@ public class Networking {
         receiver.start();
     }
     
-    public void queue(String name, String value) {
-        sender.queue(name, value);
+    public void queue(byte[] data) {
+        sender.queue(data);
     }
 }

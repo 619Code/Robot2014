@@ -1,6 +1,7 @@
 package org.carobotics.subsystems;
 
 import edu.wpi.first.wpilibj.camera.AxisCamera.WhiteBalanceT;
+import edu.wpi.first.wpilibj.image.ColorImage;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 import java.util.Vector;
 import org.carobotics.hardware.Camera;
@@ -26,7 +27,7 @@ public class Vision {
     //default settings of camera (resolution, colour etc.)
     public void setDefaultSettings() {
         camera.writeColorLevel(75);
-        camera.writeResolution(Camera.Resolution.k320x240);
+        camera.writeResolution(Camera.Resolution.k640x480);
         camera.writeBrightness(50);
         camera.writeCmpression(50);
         camera.writeWhiteBalance(WhiteBalanceT.fixedFlour1);
@@ -35,6 +36,15 @@ public class Vision {
     //returns camera
     public Camera getCamera() {
         return camera;
+    }
+    
+    public ColorImage getImage() {
+        try {
+            return camera.getImage();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     //updates camera with the driver station (to make sure they're compatible?)
