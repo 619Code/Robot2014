@@ -34,7 +34,7 @@ public class MecanumDriveMappingThread extends RobotThread {
         double scalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Z);  //fix
         if(scalePercent < 0.3) scalePercent = 0.3;
         
-        //gets percentages (more so numbers from -1 to 1) from the joysticks
+        //gets percentages (numbers from -1 to 1) from the joystick's axes used for driving
         double percent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent;
         double sidepercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_X) * scalePercent;
         double turnpercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_TWIST) * scalePercent;
