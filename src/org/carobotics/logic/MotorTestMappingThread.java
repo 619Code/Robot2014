@@ -10,16 +10,17 @@ import org.carobotics.subsystems.DriverStation;
  * @author CaRobotics
  */
 public class MotorTestMappingThread extends RobotThread {
-    protected Victor victor;
+    protected Victor victor, victor2;
     protected DriverStation driverStation;
     private boolean firstError = true;
     private final static boolean DEBUG = true;
     private long lastTime = 0;
 
-    public MotorTestMappingThread(Victor victor,
+    public MotorTestMappingThread(Victor victor, Victor victor2, 
             DriverStation driverStation, int period, ThreadManager threadManager) {
         super(period, threadManager);
         this.victor = victor;
+        this.victor2 = victor2;
         this.driverStation = driverStation;
     }
 
@@ -30,9 +31,11 @@ public class MotorTestMappingThread extends RobotThread {
         }
 
         double percent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent;
+        double secondPercent = driverStation.getRightJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent;
 
         try {
             victor.set(percent);
+            victor2.set(secondPercent);
         } catch(Exception e) {
             if(firstError || DEBUG) {
                 e.printStackTrace();

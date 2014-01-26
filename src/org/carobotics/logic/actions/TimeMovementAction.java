@@ -39,7 +39,7 @@ public class TimeMovementAction extends Action {
         return isComplete;
     }
 
-    protected void begin() {
+    public void begin() {
         timeTarget = timeMillis + System.currentTimeMillis();
     }
 

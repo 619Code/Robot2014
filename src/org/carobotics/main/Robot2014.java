@@ -9,10 +9,10 @@ package org.carobotics.main;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 import org.carobotics.logic.ActionsMappingThread;
+import org.carobotics.hardware.Solenoid;
 import org.carobotics.logic.TankDriveMappingThread;
 import org.carobotics.logic.ThreadManager;
 import org.carobotics.logic.actions.TimeMovementAction;
-import org.carobotics.subsystems.AutonomousSelector;
 import org.carobotics.subsystems.FourStickDriverStation;
 import org.carobotics.subsystems.TankDriveBase;
 
@@ -25,7 +25,6 @@ public class Robot2014 extends IterativeRobot{
     // Robot Systems (stuff from org.carobotics.subsystems)
     TankDriveBase driveBase;
     FourStickDriverStation driverStation;
-    AutonomousSelector autonomousSelector;
     // Thread Manager
     ThreadManager threadManager = new ThreadManager();
     // Logic Threads (stuff from org.carobotics.logic)
@@ -33,7 +32,8 @@ public class Robot2014 extends IterativeRobot{
     ActionsMappingThread actionsThread;
     // Actions
     TimeMovementAction forwardAction;
-    TimeMovementAction backwardAction;
+    Solenoid shooter1, shooter2;
+    
     
     /**
      * This function is run when the robot is first started up and should be
@@ -51,14 +51,20 @@ public class Robot2014 extends IterativeRobot{
         driveBase = new TankDriveBase(1, 2);//2L,3R
 
         driverStation = new FourStickDriverStation(1, 2, 3, 4);
-
-        autonomousSelector = new AutonomousSelector();
         
-        System.out.println(autonomousSelector);
+        //when we have more information put in another number
+        Solenoid shooter1 = new Solenoid(1);  //pneumatic for shooter
+        Solenoid shooter2 = new Solenoid(0);  //pneumatic for shooter
+        
+        
     }
 
     public void autonomousInit() {
         threadManager.killAllThreads(); // DO NOT REMOVE!!!
+        forwardAction = new TimeMovementAction(driveBase, 1, 2000, 2000, 1, 1, threadManager);
+        forwardAction.begin(); //starts
+        shooter1.set(true);  //starts pneumatics
+        shooter2.set(true);  //starts pneumatic
     }
 
     /**
@@ -69,8 +75,6 @@ public class Robot2014 extends IterativeRobot{
 
     public void teleopInit() {
         threadManager.killAllThreads(); // DO NOT REMOVE!!!
-
-        System.out.println(autonomousSelector); // DEBUG
          
         // DRIVE
         driveThread = new TankDriveMappingThread(driveBase, driverStation, 10, threadManager);

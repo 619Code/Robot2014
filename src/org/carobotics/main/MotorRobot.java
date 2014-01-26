@@ -22,7 +22,7 @@ import org.carobotics.subsystems.FourStickDriverStation;
  */
 public class MotorRobot extends IterativeRobot {
      // Robot Systems (stuff from org.carobotics.subsystems)
-    Victor victor;
+    Victor victor, victor2;
     FourStickDriverStation driverStation;
     
     // Thread Manager
@@ -47,6 +47,7 @@ public class MotorRobot extends IterativeRobot {
         
         driverStation = new FourStickDriverStation(1, 2, 3, 4);
         victor = new Victor(1);
+        victor2 = new Victor(2);
     }
 
     public void autonomousInit() {
@@ -62,7 +63,7 @@ public class MotorRobot extends IterativeRobot {
     public void teleopInit() {
         threadManager.killAllThreads(); // DO NOT REMOVE!!!
 
-        driveThread = new MotorTestMappingThread(victor, driverStation, 15, threadManager);
+        driveThread = new MotorTestMappingThread(victor, victor2, driverStation, 15, threadManager);
         driveThread.start(); 
     }
     
