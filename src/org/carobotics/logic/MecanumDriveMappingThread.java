@@ -4,6 +4,7 @@
  */
 package org.carobotics.logic;
 
+import org.carobotics.hardware.Talon;
 import org.carobotics.hardware.Joystick;
 import org.carobotics.subsystems.DriverStation;
 import org.carobotics.subsystems.MecanumDriveBase;
@@ -13,16 +14,18 @@ import org.carobotics.subsystems.MecanumDriveBase;
  * @author caadmin
  */
 public class MecanumDriveMappingThread extends RobotThread {
-    protected MecanumDriveBase mechanumDriveBase;
+    protected MecanumDriveBase mecanumDriveBase;
     protected DriverStation driverStation;
     private boolean firstError = true;
     private final static boolean DEBUG = false;
     private long lastTime = 0;
+    
+    Talon topLefttalon, topRighttalon, bottomLefttalon, bottomRighttalon;
 
-    public MecanumDriveMappingThread(MecanumDriveBase mechanumDriveBase,
+    public MecanumDriveMappingThread(MecanumDriveBase mecanumDriveBase,
             DriverStation driverStation, int period, ThreadManager threadManager) {
         super(period, threadManager);
-        this.mechanumDriveBase = mechanumDriveBase;
+        this.mecanumDriveBase = mecanumDriveBase;
         this.driverStation = driverStation;
     }
 
@@ -46,10 +49,10 @@ public class MecanumDriveMappingThread extends RobotThread {
         double bottomRightpercent = percent + sidepercent + turnpercent;
         
         try {
-            mechanumDriveBase.getTopleftTalon().set(topLeftpercent);
-            mechanumDriveBase.getToprightTalon().set(topRightpercent);
-            mechanumDriveBase.getBottomleftTalon().set(bottomLeftpercent);
-            mechanumDriveBase.getBottomrightTalon().set(bottomRightpercent);
+            mecanumDriveBase.getTopleftTalon().set(topLeftpercent);
+            mecanumDriveBase.getToprightTalon().set(topRightpercent);
+            mecanumDriveBase.getBottomleftTalon().set(bottomLeftpercent);
+            mecanumDriveBase.getBottomrightTalon().set(bottomRightpercent);
         } catch (Exception e) {
             if (firstError || DEBUG) {
                 e.printStackTrace();
@@ -66,11 +69,11 @@ public class MecanumDriveMappingThread extends RobotThread {
     protected void shift(){
         if(driverStation.getLeftJoystick().getButton(Joystick.Button.BUTTON11)){
             System.out.println("[MechanumDriveMappingThread] Shifting High");
-            mechanumDriveBase.shiftHigh();
+            mecanumDriveBase.shiftHigh();
         }
         if(driverStation.getLeftJoystick().getButton(Joystick.Button.BUTTON10)){
             System.out.println("[MechanumDriveMappingThread] Shifting Low");
-            mechanumDriveBase.shiftLow();
+            mecanumDriveBase.shiftLow();
         }
     }
 }
