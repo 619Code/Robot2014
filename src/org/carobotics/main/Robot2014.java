@@ -40,7 +40,7 @@ public class Robot2014 extends IterativeRobot{
      * used for any initialization code.
      */
     public void robotInit() {
-        System.out.println("\n");
+        System.out.println("\n");// shows code is working
         System.out.println("//////////////////////////////////////////////////////");
         System.out.println("// Cavalier Robotics                     TEAM 619   //");
         System.out.println("// 2014 Main Code                                   //");

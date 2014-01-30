@@ -27,7 +27,7 @@ import org.carobotics.logic.GripperThread;
  */
 public class TestRobot extends IterativeRobot {
      // Robot Systems (stuff from org.carobotics.subsystems)
-    FourStickDriverStation driver;
+    FourStickDriverStation driver; // sets up all components to be made into objects
     Arms arms;
     GripperPair feet;
     GripperPair hands;
@@ -47,7 +47,7 @@ public class TestRobot extends IterativeRobot {
      */
     public void robotInit() {
 
-        System.out.println("\n");
+        System.out.println("\n"); //printout to prove workability
         System.out.println("//////////////////////////////////////////////////////");
         System.out.println("//     Cavalier Robotics                 TEAM 619   //");
         System.out.println("//     2013 Test Robot                              //");

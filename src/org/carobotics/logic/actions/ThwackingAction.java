@@ -12,23 +12,23 @@ import org.carobotics.logic.actions.Action;
 import org.carobotics.subsystems.Thwacker;
 /**
  *
- * @author Student
+ * @author student 
  */
 public class ThwackingAction extends Action{ 
-private Solenoid shooterOne, shootertwo;
+private Solenoid shooterOne, shootertwo;// Solenoid because pneumatics
 public boolean isComplete = false;
-    public ThwackingAction(Solenoid shooter1, Solenoid shooter2, int waitForDependenciesPeriod, int runPeriod, ThreadManager threadManager, Vector dependencies){
+    public ThwackingAction(Solenoid shooter1, Solenoid shooter2, int waitForDependenciesPeriod, int runPeriod, ThreadManager threadManager, Vector dependencies){// defines variables 
         super(waitForDependenciesPeriod, runPeriod, threadManager, dependencies);
-        this.shooterOne = shooter1;
+        this.shooterOne = shooter1;  // creates objects for talons
         this.shootertwo = shooter2;
-        System.out.println("thwacking action started");
+        System.out.println("thwacking action started");// Tells if it is working
     }
-    public ThwackingAction(Solenoid shooter1, Solenoid shooter2, int waitForDependenciesPeriod, int runPeriod, ThreadManager threadManager, Action dependencies){
-        super(waitForDependenciesPeriod, runPeriod, threadManager, dependencies);
-        //this.shooterOne = shooter1;
-        //this.shootertwo = shooter2;
-        System.out.println("thwacking action started");
-    }
+    //public ThwackingAction(Solenoid shooter1, Solenoid shooter2, int waitForDependenciesPeriod, int runPeriod, ThreadManager threadManager, Action dependencies){
+    //    super(waitForDependenciesPeriod, runPeriod, threadManager, dependencies);
+    //    this.shooterOne = shooter1;
+    //    this.shootertwo = shooter2;
+    //    System.out.println("thwacking action started");
+    //}
     
     public boolean isComplete() {
        return isComplete;

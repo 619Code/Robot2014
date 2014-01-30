@@ -10,8 +10,8 @@ import org.carobotics.subsystems.DriverStation;
  * @author CaRobotics
  */
 public class MotorTestMappingThread extends RobotThread {
-    protected Victor victor, victor2;
-    protected DriverStation driverStation;
+    protected Victor victor, victor2;  //adds motor controllers
+    protected DriverStation driverStation;  //adds driverstation
     private boolean firstError = true;
     private final static boolean DEBUG = true;
     private long lastTime = 0;
@@ -19,18 +19,18 @@ public class MotorTestMappingThread extends RobotThread {
     public MotorTestMappingThread(Victor victor, Victor victor2, 
             DriverStation driverStation, int period, ThreadManager threadManager) {
         super(period, threadManager);
-        this.victor = victor;
-        this.victor2 = victor2;
+        this.victor = victor;  //makes them objects
+        this.victor2 = victor2;  
         this.driverStation = driverStation;
     }
 
     protected void cycle() {
-        double scalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Z);
+        double scalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Z);  // makes sure the robot can always move
         if(scalePercent < 0.3) {
             scalePercent = 0.3;
         }
 
-        double percent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent;
+        double percent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent; // sets up joysticks
         double secondPercent = driverStation.getRightJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent;
 
         try {
