@@ -5,7 +5,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Student/Documents/GitHub/Robot2014/src/org/carobotics/main/Robot2013.java</file>
+            <file>file:/C:/Users/Student/Documents/GitHub/Robot2014/src/org/carobotics/logic/MotorTestMappingThread.java</file>
+            <file>file:/C:/Users/Student/Documents/GitHub/Robot2014/src/org/carobotics/logic/actions/ThwackingAction.java</file>
+            <file>file:/C:/Users/Student/Documents/GitHub/Robot2014/src/org/carobotics/logic/actions/DumperAction.java</file>
+            <file>file:/C:/Users/Student/Documents/GitHub/Robot2014/src/org/carobotics/main/MotorRobot.java</file>
+            <file>file:/C:/Users/Student/Documents/GitHub/Robot2014/src/org/carobotics/main/TestRobot.java</file>
             <file>file:/C:/Users/Student/Documents/GitHub/Robot2014/src/org/carobotics/main/Robot2014.java</file>
         </group>
     </open-files>

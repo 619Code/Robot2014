@@ -101,5 +101,8 @@
                 <source-level>1.4</source-level>
             </compilation-unit>
         </java-data>
+        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>Mecanum</word>
+        </spellchecker-wordlist>
     </configuration>
 </project>
