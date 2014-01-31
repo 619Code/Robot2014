@@ -14,8 +14,8 @@ public class Solenoid {
         lastSetTime = System.currentTimeMillis();
     }
     
-    public Solenoid(int module, int chanel){
-        sol = new edu.wpi.first.wpilibj.Solenoid(module, chanel);
+    public Solenoid(int module, int channel){
+        sol = new edu.wpi.first.wpilibj.Solenoid(module, channel);
         lastSetTime = System.currentTimeMillis();
     }
     

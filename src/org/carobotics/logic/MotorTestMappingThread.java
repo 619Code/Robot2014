@@ -43,9 +43,11 @@ public class MotorTestMappingThread extends RobotThread {
         }
 
         SmartDashboard.putNumber("Drive - percent", percent);
+        SmartDashboard.putNumber("Drive - secondPercent", secondPercent);
         
         if(DEBUG) {
             System.out.println("[MotorTestMappingThread] Left Percent: " + percent);
+            System.out.println("[MotorTestMappingThread] Right Percent: " + secondPercent);
         }
     }
 }
