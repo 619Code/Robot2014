@@ -19,15 +19,19 @@ public class Solenoid {
         lastSetTime = System.currentTimeMillis();
     }
     
+    //gets whether Solenoid is set on or off
     public boolean get(){
         return sol.get();
     }
     
+    //set the solenoid on or off
     public void set(boolean on){
         sol.set(on);
         lastSetTime = System.currentTimeMillis();
     }
     
+    //keeps track of last time the solenoid was turned on
+    //(for knowing if pneumatic is filled with air again or not)
     public long getLastSetTime(){
         return lastSetTime;
     }

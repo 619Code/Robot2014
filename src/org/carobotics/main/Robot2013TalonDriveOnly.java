@@ -108,8 +108,7 @@ public class Robot2013TalonDriveOnly extends IterativeRobot {
         
         fanThread = new TalonFanThread(driverStation, fanTalon, 20, threadManager);
         fanThread.start();
-        
-        
+           
     }
     
     public void teleopPeriodic(){

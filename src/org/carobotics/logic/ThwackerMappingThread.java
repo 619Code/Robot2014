@@ -12,7 +12,7 @@ import org.carobotics.subsystems.FrisbeeDumper;
  * @author Student
  */
 public class ThwackerMappingThread extends RobotThread{
-
+    
     protected FourStickDriverStation driverStation;
     private final static boolean DEBUG = false;
     private FrisbeeDumper frisbeeDumper;
@@ -31,7 +31,6 @@ public class ThwackerMappingThread extends RobotThread{
             if (scalePercent < 0.3) {
                 scalePercent = 0.3;
             }
-            
             if(!frisbeeDumper.isLimit() && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) > 0) {
                 frisbeeDumper.getMotor().set(0);
             } else {

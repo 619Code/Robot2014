@@ -13,6 +13,7 @@ public class DumperMappingThread extends RobotThread {
     private final static boolean DEBUG = false;
     private FrisbeeDumper frisbeeDumper;
     private boolean lockUnpressed = true;
+    
     public DumperMappingThread(FrisbeeDumper frisbeeDumper,
             FourStickDriverStation driverStation, int period, ThreadManager threadManager) {
         super(period, threadManager);

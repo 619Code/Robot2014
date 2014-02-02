@@ -12,6 +12,7 @@ public class FrisbeeDumper {
     protected Talon motor;
     protected DigitalInput limit;
     private boolean isUnlocked = true;
+    
     public FrisbeeDumper(int motor, int servo, int limit) {
         this.motor = new Talon(motor);
 
