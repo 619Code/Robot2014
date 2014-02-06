@@ -17,7 +17,7 @@ public class MecanumDriveMappingThread extends RobotThread {
     protected MecanumDriveBase mecanumDriveBase;
     protected DriverStation driverStation;
     private boolean firstError = true;
-    private final static boolean DEBUG = false;
+    private final static boolean DEBUG = true;
     private long lastTime = 0;
     
     Talon topLefttalon, topRighttalon, bottomLefttalon, bottomRighttalon;
@@ -43,16 +43,16 @@ public class MecanumDriveMappingThread extends RobotThread {
         double turnpercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_TWIST) * scalePercent;
         
         
-        double topLeftpercent = percent - sidepercent - turnpercent;
-        double topRightpercent = percent - sidepercent + turnpercent;
-        double bottomLeftpercent = percent + sidepercent - turnpercent;
-        double bottomRightpercent = percent + sidepercent + turnpercent;
+//        double topLeftpercent = percent - sidepercent - turnpercent;
+//        double topRightpercent = percent - sidepercent + turnpercent;
+//        double bottomLeftpercent = percent + sidepercent - turnpercent;
+//        double bottomRightpercent = percent + sidepercent + turnpercent;
         
         try {
-            mecanumDriveBase.getTopleftTalon().set(topLeftpercent);
-            mecanumDriveBase.getToprightTalon().set(topRightpercent);
-            mecanumDriveBase.getBottomleftTalon().set(bottomLeftpercent);
-            mecanumDriveBase.getBottomrightTalon().set(bottomRightpercent);
+            mecanumDriveBase.getTopleftTalon().set(percent);
+            mecanumDriveBase.getToprightTalon().set(percent);
+            mecanumDriveBase.getBottomleftTalon().set(percent);
+            mecanumDriveBase.getBottomrightTalon().set(percent);
         } catch (Exception e) {
             if (firstError || DEBUG) {
                 e.printStackTrace();
@@ -61,7 +61,7 @@ public class MecanumDriveMappingThread extends RobotThread {
         
         if(DEBUG) 
             
-            System.out.println("[MechanumDriveMappingThread] Percent: "+percent);
+            System.out.println("[MechanumDriveMappingThread] Percent: "+ percent);
         
         shift();
     }
