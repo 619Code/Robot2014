@@ -32,7 +32,7 @@ public class Joystick {
         public static final int AXIS_Z = 2;
         public static final int AXIS_TWIST = 3;
         public static final int STICK_MAGNITUDE = 4;
-        public static final int AXIS_THROTTLE = AXIS_Z; // This is the correct mapping on Attack 3's and the Saitek joysticks. Might want to change this for other joysticks
+        public static final int AXIS_THROTTLE = AXIS_Z+1; // This is the correct mapping on Attack 3's and the Saitek joysticks. Might want to change this for other joysticks
         
         public static final int MAX_AXIS_VALUE = AXIS_THROTTLE + 1;
     }
@@ -98,9 +98,9 @@ public class Joystick {
     }
     
     
-    
-    
     public double getAxis(int axis, boolean overrideReverse){
+        System.out.println("RAXIS= "+reversedAxis.length);
+        System.out.println("AXIS = "+axis);
         if(!overrideReverse && reversedAxis[axis]){
             return -1.0 * getAxis(axis, true);
         }

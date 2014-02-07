@@ -40,19 +40,21 @@ public class MecanumDriveMappingThread extends RobotThread {
         //gets percentages (numbers from -1 to 1) from the joystick's axes used for driving
         double percent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent;
         double sidepercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_X) * scalePercent;
-        double turnpercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_TWIST) * scalePercent;
+        double turnpercent = 0;//driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_TWIST) * scalePercent;
         
         
-//        double topLeftpercent = percent - sidepercent - turnpercent;
-//        double topRightpercent = percent - sidepercent + turnpercent;
-//        double bottomLeftpercent = percent + sidepercent - turnpercent;
-//        double bottomRightpercent = percent + sidepercent + turnpercent;
+        //needs to be fixed, as soon as joysticks are pushed in any direction, wheels don't stop even when not touching joysticks
+        
+        double topLeftpercent = -(percent - sidepercent - turnpercent);
+        double topRightpercent = percent - sidepercent + turnpercent;
+        double bottomLeftpercent = -(percent + sidepercent - turnpercent);
+        double bottomRightpercent = percent + sidepercent + turnpercent;
         
         try {
-            mecanumDriveBase.getTopleftTalon().set(percent);
-            mecanumDriveBase.getToprightTalon().set(percent);
-            mecanumDriveBase.getBottomleftTalon().set(percent);
-            mecanumDriveBase.getBottomrightTalon().set(percent);
+            mecanumDriveBase.getTopleftTalon().set(topLeftpercent);
+            mecanumDriveBase.getToprightTalon().set(topRightpercent);
+            mecanumDriveBase.getBottomleftTalon().set(bottomLeftpercent);
+            mecanumDriveBase.getBottomrightTalon().set(bottomRightpercent);
         } catch (Exception e) {
             if (firstError || DEBUG) {
                 e.printStackTrace();
@@ -61,7 +63,10 @@ public class MecanumDriveMappingThread extends RobotThread {
         
         if(DEBUG) 
             
-            System.out.println("[MechanumDriveMappingThread] Percent: "+ percent);
+            System.out.println("[MechanumDriveMappingThread] percent: "+ percent);
+            System.out.println("[MechanumDriveMappingThread] sidepercent: "+ sidepercent);
+            System.out.println("[MechanumDriveMappingThread] turnpercent: "+ turnpercent);
+            
         
         shift();
     }
