@@ -17,13 +17,11 @@ public class LiftyThing {
     protected Talon motor;
     protected DigitalInput limit;
     private boolean isUnlocked = true;
-    public LiftyThing
-        (int motor, int servo, int limit) {
+    
+    public LiftyThing(int motor, int servo, int limit) {
         this.motor = new Talon(motor);
-
         this.servo = new Servo(servo);
-        this.servo.setRaw(1);
-        
+        this.servo.setRaw(1);       
         this.limit = new DigitalInput(limit);
     }
 

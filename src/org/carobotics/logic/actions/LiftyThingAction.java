@@ -7,8 +7,7 @@
 package org.carobotics.logic.actions;
 import java.util.Vector;
 import org.carobotics.logic.ThreadManager;
-import org.carobotics.logic.actions.Action;
-import org.carobotics.subsystems.FrisbeeDumper;
+import org.carobotics.subsystems.LiftyThing;
 /**
  *
  * @author Student
@@ -16,13 +15,18 @@ import org.carobotics.subsystems.FrisbeeDumper;
 public class LiftyThingAction extends Action {
     public boolean isComplete = false;
     
-    public LiftyThingAction(int waitForDependenciesPeriod, int runPeriod, ThreadManager threadManager, Vector dependencies){
+    private long timeTarget;
+    private LiftyThing liftyThing;
+    private long startTime;
+    
+    public LiftyThingAction(LiftyThing liftyThing, int waitForDependenciesPeriod, int runPeriod, ThreadManager threadManager, Vector dependencies){
         super (waitForDependenciesPeriod, runPeriod, threadManager, dependencies);
-        System.out.println("Thwacking action started");
+        this.liftyThing = liftyThing;
+        System.out.println("[LiftyThingAction] started");
     
     }
-    public  LiftyThingAction(int waitForDependenciesPeriod, int runPeriod, ThreadManager threadManager, Action dependency) {
-        this(waitForDependenciesPeriod, runPeriod, threadManager, new Vector());
+    public  LiftyThingAction(LiftyThing liftyThing, int waitForDependenciesPeriod, int runPeriod, ThreadManager threadManager, Action dependency) {
+        this(liftyThing, waitForDependenciesPeriod, runPeriod, threadManager, new Vector());
         super.addDependency(dependency);
     }
 
@@ -31,10 +35,17 @@ public class LiftyThingAction extends Action {
         return isComplete;
     }
 
-    
-
+    public void begin() {
+        startTime = System.currentTimeMillis();
+        liftyThing.unlock();
+    }
 
     protected void cycle() {
+        if(System.currentTimeMillis()-startTime < 1000){
+            liftyThing.getMotor().set(-0.3);
+        }else{
+            liftyThing.getMotor().set(0.0);
+        }
     }
     
 }

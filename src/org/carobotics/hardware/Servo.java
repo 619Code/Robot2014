@@ -6,7 +6,7 @@ package org.carobotics.hardware;
 public class Servo {
     edu.wpi.first.wpilibj.Servo servo;
     
-    public Servo(int channel) {
+    public Servo(int channel/*slot in digital sidecar*/) {
         servo = new edu.wpi.first.wpilibj.Servo(channel);
 //        servo.setBounds(255, 130, 127, 125, 0); // TODO: Not working yet
 //        servo.setBounds(245, 0, 0, 0, 11);

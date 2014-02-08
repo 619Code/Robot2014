@@ -9,7 +9,7 @@ public class Solenoid {
     
     private long lastSetTime;
     
-    public Solenoid(int id){
+    public Solenoid(int id/*where pneumatic plugs into sidecar*/){
         sol = new edu.wpi.first.wpilibj.Solenoid(id);
         lastSetTime = System.currentTimeMillis();
     }

@@ -4,7 +4,8 @@ import org.carobotics.hardware.Solenoid;
 
 /**
  *
- * This class deals with the actual Thwacker object
+ * This class deals with the actual Thwacker object which takes in two solenoids
+ * (pneumatics) to hit a 2ft. diameter ball
  * 
  * @author Student
  */
@@ -28,6 +29,18 @@ public class Thwacker {
         }//end if else
         
     }//end boolean isOut
+    
+    //activates the solenoids to shoot
+    public void fire(){
+        shooter1.set(true);
+        shooter2.set(true);
+    }//end method fire
+    
+    //deactivates the solenoids casuing them to return
+    public void reset(){
+        shooter1.set(false);
+        shooter2.set(false);
+    }//end method reset
     
     //returns one of the pneumatics of the shooter
     public Solenoid getShooter1(){

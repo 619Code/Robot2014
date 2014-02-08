@@ -14,6 +14,7 @@ import org.carobotics.logic.DumperMappingThread;
 import org.carobotics.logic.TalonFanThread;
 import org.carobotics.logic.TalonTankDriveMappingThread;
 import org.carobotics.logic.ThreadManager;
+import org.carobotics.subsystems.TalonDriveBase;
 import org.carobotics.subsystems.AutonomousSelector;
 import org.carobotics.subsystems.FourStickDriverStation;
 
@@ -31,6 +32,7 @@ public class Robot2013TalonDriveOnly extends IterativeRobot {
     FourStickDriverStation driverStation;
     //FrisbeeDumper dumper;
     AutonomousSelector autonomousSelector;
+    TalonDriveBase driveBase;
     TalonFanThread fanThread;
     
     Talon fanTalon;
@@ -63,7 +65,7 @@ public class Robot2013TalonDriveOnly extends IterativeRobot {
         rightTalon2 = new Talon(5);
         leftTalon.setReversed(true);
         leftTalon2.setReversed(true);
-        
+        driveBase = new TalonDriveBase(leftTalon, rightTalon, leftTalon2, rightTalon2);
         
         fanTalon = new Talon(1);
         
@@ -103,7 +105,7 @@ public class Robot2013TalonDriveOnly extends IterativeRobot {
     public void teleopInit() {
         threadManager.killAllThreads(); // DO NOT REMOVE!!!
 
-        driveThread = new TalonTankDriveMappingThread(leftTalon, rightTalon, leftTalon2, rightTalon2, driverStation, 15, threadManager);
+        driveThread = new TalonTankDriveMappingThread(driveBase, driverStation, 15, threadManager);
         driveThread.start(); 
         
         fanThread = new TalonFanThread(driverStation, fanTalon, 20, threadManager);

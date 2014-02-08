@@ -19,20 +19,17 @@ public class TalonTankDriveMappingThread extends RobotThread {
     private final static boolean DEBUG = true;
     private long lastTime = 0;
 
-    public TalonTankDriveMappingThread(Talon leftTalon, Talon rightTalon, Talon leftTalon2, Talon rightTalon2,
+    public TalonTankDriveMappingThread(TalonDriveBase driveBase,
             DriverStation driverStation, int period, ThreadManager threadManager) {
         super(period, threadManager);
-       // this.driveBase = driveBase;
-        this.leftTalon = leftTalon;
-        this.rightTalon = rightTalon;
+        this.driveBase = driveBase;
         this.driverStation = driverStation;
-        this.leftTalon2 = leftTalon2;
-        this.rightTalon2 = rightTalon2;
     }
 
     protected void cycle() {
         double rightScalePercent = driverStation.getRightJoystick().getAxis(Joystick.Axis.AXIS_Z);
         double leftScalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Z);
+        
         if(rightScalePercent < 0.3) {
             rightScalePercent = 0.3;
         }

@@ -7,7 +7,7 @@ public class Compressor {
     private edu.wpi.first.wpilibj.Compressor comp;
     
     //pressure switch is 
-    public Compressor(int pressureSwitch, int compRelay){
+    public Compressor(int pressureSwitch/*where compressor plugged into the digital sidecar*/, int compRelay){
         comp = new edu.wpi.first.wpilibj.Compressor(pressureSwitch, compRelay);
     }
     

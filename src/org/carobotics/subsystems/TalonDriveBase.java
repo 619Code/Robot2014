@@ -18,6 +18,11 @@ public class TalonDriveBase extends TankDriveBase {
         leftMotor = new Talon(leftMotorTalonID);
         rightMotor = new Talon(rightMotorTalonID);
     }
+    
+    public TalonDriveBase(Talon leftMotor, Talon rightMotor){
+        this.leftMotor = leftMotor;
+        this.rightMotor = rightMotor;
+    }//end object TalonDriveBase
 
     public TalonDriveBase(Talon leftMotor1, Talon leftMotor2, Talon rightMotor1, Talon rightMotor2) {
         this.leftMotor = leftMotor1;
