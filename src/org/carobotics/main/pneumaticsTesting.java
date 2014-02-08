@@ -15,6 +15,9 @@ import org.carobotics.subsystems.FourStickDriverStation;
  */
 import org.carobotics.logic.ThreadManager;
 public class pneumaticsTesting {
+    
+    ThreadManager threadManager;
+    
     public void robotInit() {
 
         System.out.println("\n"); //printout to prove workability
@@ -42,28 +45,10 @@ public class pneumaticsTesting {
     
     public void teleopInit() {
         threadManager.killAllThreads(); // DO NOT REMOVE!!!
-        
-//        gripperThread = new GripperThread(feet, hands, 100, threadManager);
-//        armThread = new ArmMappingThread(arms, gripperThread, driver, 10, threadManager);
-//        armThread.setArmsPID(0.01, 0.0, 0.0);
-//        gripperThread.start();
-//        armThread.start();
+
     }
     
     public void teleopPeriodic() {
-//        System.out.println("Shoulder pot: " + arms.getShoulders().getAngle());
-//        
-//        System.out.println("left joystick: " + driver.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y));
-//        System.out.println("right joystick: " + driver.getRightJoystick().getAxis(Joystick.Axis.AXIS_Y));
-//        System.out.println("third joystick: " + driver.getThirdJoystick().getAxis(Joystick.Axis.AXIS_Y));
-//        System.out.println("fourth joystick: " + driver.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y));
-        driver.getRightJoystick().debugPrint();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
-      
     }
         
 

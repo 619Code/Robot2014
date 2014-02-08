@@ -29,6 +29,7 @@ public class LiftyThingMappingThread extends RobotThread {
     }
     
     protected void cycle() {
+        
        if (driverStation.getFourthJoystick().getButton(Joystick.Button.BUTTON2)) {
             double scalePercent = driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Z);
             if (scalePercent < 0.3) {

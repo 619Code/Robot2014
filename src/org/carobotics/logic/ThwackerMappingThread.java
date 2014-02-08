@@ -2,7 +2,7 @@ package org.carobotics.logic;
 
 import org.carobotics.hardware.Joystick;
 import org.carobotics.subsystems.FourStickDriverStation;
-import org.carobotics.subsystems.FrisbeeDumper;
+import org.carobotics.subsystems.Thwacker;
 
 /**
  *
@@ -15,39 +15,33 @@ public class ThwackerMappingThread extends RobotThread{
     
     protected FourStickDriverStation driverStation;
     private final static boolean DEBUG = false;
-    private FrisbeeDumper frisbeeDumper;
+    private Thwacker thwacker;
     private boolean shootersOn = true;
     
-    public ThwackerMappingThread(FrisbeeDumper frisbeeDumper,
+    public ThwackerMappingThread(Thwacker thwacker,
             FourStickDriverStation driverStation, int period, ThreadManager threadManager) {
         super(period, threadManager);
-        this.frisbeeDumper = frisbeeDumper;
+        this.thwacker = thwacker;
         this.driverStation = driverStation;
     }
 
     protected void cycle() {
-        if (driverStation.getFourthJoystick().getButton(Joystick.Button.BUTTON8)) {
-            double scalePercent = driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Z);
-            if (scalePercent < 0.3) {
-                scalePercent = 0.3;
+        
+        if(driverStation.getThirdJoystick().getButton(Joystick.Button.TRIGGER)){
+            if(shootersOn){
+                thwacker.fire();
+                shootersOn = false;
             }
-            if(!frisbeeDumper.isLimit() && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) > 0) {
-                frisbeeDumper.getMotor().set(0);
-            } else {
-                frisbeeDumper.getMotor().set(driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent);
-            }
-        }else{
-           frisbeeDumper.getMotor().set(0);
+        } else {
+            //if pneumatics are messing up and not working then delete thwacker.reset();
+            thwacker.reset();
+            shootersOn = true;
         }
-//        
-//        if(driverStation.getFourthJoystick().getButton(Joystick.Button.BUTTON9)){
-//            if(shootersOn){
-//                frisbeeDumper.toggleLocked();
-//                shootersOn = false;
-//            }
-//        } else {
-//            shootersOn = true;
-//        }
+        
+        if(driverStation.getThirdJoystick().getButton(Joystick.Button.BUTTON2)){
+            thwacker.reset();
+        }//end if
+        
     }
     
 }

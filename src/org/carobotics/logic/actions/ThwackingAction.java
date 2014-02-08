@@ -31,7 +31,7 @@ private long startTime;
        return isComplete;
     }
     
-    public  void begin() {
+    public void begin() {
         startTime = System.currentTimeMillis();
         thwacker.fire();
     }
