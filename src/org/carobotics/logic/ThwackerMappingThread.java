@@ -39,15 +39,15 @@ public class ThwackerMappingThread extends RobotThread{
         }else{
            frisbeeDumper.getMotor().set(0);
         }
-        
-        if(driverStation.getFourthJoystick().getButton(Joystick.Button.BUTTON9)){
-            if(shootersOn){
-                frisbeeDumper.toggleLocked();
-                shootersOn = false;
-            }
-        } else {
-            shootersOn = true;
-        }
+//        
+//        if(driverStation.getFourthJoystick().getButton(Joystick.Button.BUTTON9)){
+//            if(shootersOn){
+//                frisbeeDumper.toggleLocked();
+//                shootersOn = false;
+//            }
+//        } else {
+//            shootersOn = true;
+//        }
     }
     
 }

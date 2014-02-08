@@ -29,7 +29,19 @@ public class LiftyThingMappingThread extends RobotThread {
     }
     
     protected void cycle() {
-       
+       if (driverStation.getFourthJoystick().getButton(Joystick.Button.BUTTON2)) {
+            double scalePercent = driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Z);
+            if (scalePercent < 0.3) {
+                scalePercent = 0.3;
+            }
+            if(!liftyThing.isLimit() && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) > 0) {
+                liftyThing.getMotor().set(0);
+            } else {
+                liftyThing.getMotor().set(driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent);
+            }
+        }else{
+           liftyThing.getMotor().set(0);
+        }
     }
 }
 
