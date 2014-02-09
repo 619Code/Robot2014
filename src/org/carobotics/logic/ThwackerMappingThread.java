@@ -3,6 +3,7 @@ package org.carobotics.logic;
 import org.carobotics.hardware.Joystick;
 import org.carobotics.subsystems.FourStickDriverStation;
 import org.carobotics.subsystems.Thwacker;
+import org.carobotics.hardware.Compressor;
 
 /**
  *
@@ -16,12 +17,14 @@ public class ThwackerMappingThread extends RobotThread{
     protected FourStickDriverStation driverStation;
     private final static boolean DEBUG = false;
     private Thwacker thwacker;
+    private Compressor comp;
     private boolean shootersOn = true;
     
-    public ThwackerMappingThread(Thwacker thwacker,
+    public ThwackerMappingThread(Thwacker thwacker, Compressor comp,
             FourStickDriverStation driverStation, int period, ThreadManager threadManager) {
         super(period, threadManager);
         this.thwacker = thwacker;
+        this.comp = comp;
         this.driverStation = driverStation;
     }
 

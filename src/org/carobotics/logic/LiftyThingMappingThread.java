@@ -10,6 +10,8 @@ import org.carobotics.subsystems.LiftyThing;
 import java.util.Vector;
 import org.carobotics.hardware.Joystick;
 import org.carobotics.subsystems.FourStickDriverStation;
+import org.carobotics.hardware.Talon;
+import org.carobotics.hardware.Solenoid;
 
 /**
  * 
@@ -20,12 +22,16 @@ import org.carobotics.subsystems.FourStickDriverStation;
 public class LiftyThingMappingThread extends RobotThread {
     
     protected FourStickDriverStation driverStation;
+    private boolean atTop = false;
     private LiftyThing liftyThing;
+    private Talon talon;
+    private Solenoid leadTop, leadBottom, liftTop, liftBottom;
     
-    public LiftyThingMappingThread(LiftyThing liftyThing,  FourStickDriverStation driverStation, int period, ThreadManager threadManager){
+    public LiftyThingMappingThread(LiftyThing liftyThing, Talon leadScrew, Solenoid leadTop, Solenoid leadBottom, Solenoid liftTop, Solenoid liftBottom, FourStickDriverStation driverStation, int period, ThreadManager threadManager){
         super(period, threadManager);
         this.driverStation = driverStation;
         this.liftyThing = liftyThing;
+        this.talon = leadScrew;
     }
     
     protected void cycle() {
@@ -43,6 +49,20 @@ public class LiftyThingMappingThread extends RobotThread {
         }else{
            liftyThing.getMotor().set(0);
         }
+       
+      if(driverStation.getFourthJoystick().getButton(Joystick.Button.BUTTON7)){
+          if(atTop){
+              talon.set(-1);
+              if(){
+                  
+              }
+          }
+          
+          
+      }else{
+          
+      }
+       
     }
 }
 

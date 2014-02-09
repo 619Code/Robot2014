@@ -1,6 +1,7 @@
 package org.carobotics.subsystems;
 
 import org.carobotics.hardware.Solenoid;
+import org.carobotics.hardware.Compressor;
 
 /**
  *
@@ -11,11 +12,13 @@ import org.carobotics.hardware.Solenoid;
  */
 public class Thwacker {
     protected Solenoid shooter1, shooter2;
+    private Compressor comp;
     
     //initiates the Thwacker object variables
-    public Thwacker(Solenoid shooter1, Solenoid shooter2){
+    public Thwacker(Solenoid shooter1, Solenoid shooter2, Compressor comp){
         this.shooter1 = shooter1;
         this.shooter2 = shooter2;
+        this.comp = comp;
     }//end Thwacker object
     
     //checks if the thwacker stick is outside of the robot
@@ -40,6 +43,8 @@ public class Thwacker {
     public void reset(){
         shooter1.set(false);
         shooter2.set(false);
+        // TODO if an error occurs this is why
+        comp.start();
     }//end method reset
     
     //returns one of the pneumatics of the shooter

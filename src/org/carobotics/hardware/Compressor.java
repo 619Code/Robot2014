@@ -19,7 +19,7 @@ public class Compressor {
         comp.start();
     }
     
-    public void stop () {
+    public void stop() {
         comp.stop();
     }
     

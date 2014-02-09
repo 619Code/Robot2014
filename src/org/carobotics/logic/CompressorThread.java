@@ -8,23 +8,23 @@ import org.carobotics.hardware.Compressor;
  */
 public class CompressorThread extends RobotThread{
 
-    Compressor compressor;
+    Compressor comp;
     
-    public CompressorThread(int period, ThreadManager threadManager, Compressor compressor){
+    public CompressorThread(Compressor comp, int period, ThreadManager threadManager){
         super(period, threadManager);
-        this.compressor = compressor;
+        this.comp = comp;
     }
     
     protected void cycle() {
-        if(!compressor.getPressureSwitchValue()) {
-            compressor.start();
+        if(!comp.getPressureSwitchValue()) {
         } else {
-            compressor.stop();
+            comp.start();
+            comp.stop();
         }
     }
     
     protected void onDestroy(){
-        compressor.stop();
+        comp.stop();
     }
     
 }
