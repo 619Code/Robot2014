@@ -12,17 +12,24 @@ import org.carobotics.subsystems.TankDriveBase;
  * @author admin
  */
 public class TalonDriveBase extends TankDriveBase {
-    private Talon leftMotor, rightMotor;
+    private Talon leftMotor, rightMotor, leftMotor2, rightMotor2;
 
     public TalonDriveBase(int leftMotorTalonID, int rightMotorTalonID) {
         leftMotor = new Talon(leftMotorTalonID);
         rightMotor = new Talon(rightMotorTalonID);
     }
     
+    public TalonDriveBase(int leftMotorTalonID, int rightMotorTalonID, int leftMotorTalonID2, int rightMotorTalonID2){
+        leftMotor = new Talon(leftMotorTalonID);
+        rightMotor = new Talon(rightMotorTalonID);
+        leftMotor2 = new Talon(leftMotorTalonID2);
+        rightMotor2 = new Talon(rightMotorTalonID2);
+    }//end constructor TalonDriveBase
+    
     public TalonDriveBase(Talon leftMotor, Talon rightMotor){
         this.leftMotor = leftMotor;
         this.rightMotor = rightMotor;
-    }//end object TalonDriveBase
+    }//end constructor TalonDriveBase
 
     public TalonDriveBase(Talon leftMotor1, Talon leftMotor2, Talon rightMotor1, Talon rightMotor2) {
         this.leftMotor = leftMotor1;
@@ -43,6 +50,14 @@ public class TalonDriveBase extends TankDriveBase {
     public Talon getRightTalon() {
         return rightMotor;
     }
+    
+    public Talon getLeftTalon2(){
+        return leftMotor2;
+    }//end Talon getLeftTalon2
+    
+    public Talon getRightTalon2(){
+        return rightMotor2;
+    }//end Talon getRightTalon2
 
     public void drive(double leftPercent, double rightPercent) {
         leftMotor.set(leftPercent);

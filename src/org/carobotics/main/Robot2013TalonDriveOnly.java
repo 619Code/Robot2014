@@ -59,15 +59,15 @@ public class Robot2013TalonDriveOnly extends IterativeRobot {
         // If you are creating something not from org.carobotics.subsystems, YER DOING IT WRONG
         
         driverStation = new FourStickDriverStation(1, 2, 3, 4);
-        leftTalon = new Talon(2);
-        rightTalon = new Talon(4);
+        leftTalon = new Talon(1);
+        rightTalon = new Talon(2);
         leftTalon2 = new Talon(3);
-        rightTalon2 = new Talon(5);
+        rightTalon2 = new Talon(4);
         leftTalon.setReversed(true);
         leftTalon2.setReversed(true);
         driveBase = new TalonDriveBase(leftTalon, rightTalon, leftTalon2, rightTalon2);
         
-        fanTalon = new Talon(1);
+        fanTalon = new Talon(5);
         
         //dumper = new FrisbeeDumper(5, 6, 7);
         

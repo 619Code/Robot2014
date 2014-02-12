@@ -70,20 +70,24 @@ public class Robot2014 extends IterativeRobot{
 
         // Create all robot subsystems (i.e. stuff from org.carobotics.subsystems)
         // If you are creating something not from org.carobotics.subsystems, YER DOING IT WRONG
-        driveBase = new TalonDriveBase(1, 2);
         driverStation = new FourStickDriverStation(1, 2, 3, 4);
         
-        //when we have more information put in another number (may be done)
-        shooter1 = new Solenoid(3);  //pneumatic for shooter
-        shooter2 = new Solenoid(4);  //pneumatic for shooter
-        leadTop = new Solenoid(6);
-        leadBottom = new Solenoid(7);
-        liftTop = new Solenoid(8);
-        liftBottom = new Solenoid(9);
-        comp = new Compressor(1, 3);
+        //plug into digital output on the digital sidecar
+        driveBase = new TalonDriveBase(1, 2);
+        leadScrew = new Talon(3);//active
+        liftyThing = new LiftyThing(4, 6, 1);
+        
+        //plug into digital input on the digital sidecar
+        shooter1 = new Solenoid(1);
+        shooter2 = new Solenoid(2); 
+        leadTop = new Solenoid(3);//active
+        leadBottom = new Solenoid(4);
+        liftTop = new Solenoid(5);
+        liftBottom = new Solenoid(6);
+        comp = new Compressor(7, 8);
         thwacker = new Thwacker(shooter1, shooter2, comp);
-        liftyThing = new LiftyThing(5, 6, 1);
-        leadScrew = new Talon(7);
+        
+        
         
         
     }

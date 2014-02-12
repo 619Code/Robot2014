@@ -40,12 +40,12 @@ public class TalonTankDriveMappingThread extends RobotThread {
         double leftPercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y) * leftScalePercent;
         double rightPercent = driverStation.getRightJoystick().getAxis(Joystick.Axis.AXIS_Y) * rightScalePercent;
 
-        leftTalon.set(leftPercent);
-        rightTalon.set(rightPercent);
+        driveBase.getLeftTalon().set(leftPercent);
+        driveBase.getRightTalon().set(rightPercent);
         
-        if(leftTalon2 != null && rightTalon2 != null){
-            leftTalon2.set(leftPercent);
-            rightTalon2.set(rightPercent);
+        if(driveBase.getLeftTalon2() != null && driveBase.getRightTalon2() != null){
+            driveBase.getLeftTalon2().set(leftPercent);
+            driveBase.getRightTalon2().set(rightPercent);
             if(DEBUG) System.out.println("[TalonTankDriveMappingThread] Using 2nd motors");
         }
        
