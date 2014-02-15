@@ -126,6 +126,7 @@ public class Robot2014 extends IterativeRobot{
         driveThread.start();//starts thread for driving
         liftyThread.start();//starts thread for lifty thing
         compressorThread.start();
+        System.out.println("Compressor should be working now...");
 
     }
 

@@ -8,7 +8,7 @@ import org.carobotics.hardware.Compressor;
  */
 public class CompressorThread extends RobotThread{
 
-    Compressor comp;
+    private Compressor comp;
     
     public CompressorThread(Compressor comp, int period, ThreadManager threadManager){
         super(period, threadManager);
