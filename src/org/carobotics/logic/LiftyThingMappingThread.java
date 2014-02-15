@@ -5,13 +5,16 @@
  */
 
 package org.carobotics.logic;
-import org.carobotics.subsystems.FourStickDriverStation;
-import org.carobotics.subsystems.LiftyThing;
-import java.util.Vector;
-import org.carobotics.hardware.Joystick;
-import org.carobotics.subsystems.FourStickDriverStation;
+
 import org.carobotics.hardware.Talon;
 import org.carobotics.hardware.Solenoid;
+import org.carobotics.hardware.Joystick;
+import org.carobotics.hardware.DigitalInput;
+import org.carobotics.subsystems.FourStickDriverStation;
+import org.carobotics.subsystems.LiftyThing;
+import org.carobotics.subsystems.FourStickDriverStation;
+import java.util.Vector;
+
 
 /**
  * 
@@ -25,9 +28,9 @@ public class LiftyThingMappingThread extends RobotThread {
     private boolean atTop = false;
     private LiftyThing liftyThing;
     private Talon leadScrew;
-    private Solenoid leadTop, leadBottom, liftTop, liftBottom;
+    private DigitalInput leadTop, leadBottom, liftTop, liftBottom;
     
-    public LiftyThingMappingThread(LiftyThing liftyThing, Talon leadScrew, Solenoid leadTop, Solenoid leadBottom, Solenoid liftTop, Solenoid liftBottom, FourStickDriverStation driverStation, int period, ThreadManager threadManager){
+    public LiftyThingMappingThread(LiftyThing liftyThing, Talon leadScrew, DigitalInput leadTop, DigitalInput leadBottom, DigitalInput liftTop, DigitalInput liftBottom, FourStickDriverStation driverStation, int period, ThreadManager threadManager){
         super(period, threadManager);
         this.driverStation = driverStation;
         this.liftyThing = liftyThing;
@@ -40,7 +43,7 @@ public class LiftyThingMappingThread extends RobotThread {
     
     protected void cycle() {
         
-        if(leadTop.get()){
+        if(liftBottom.get()){
             System.out.println("LIMIT SWITCH WORKS MUDDER FUCKER!!!");
         }//end if
         

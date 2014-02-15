@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import org.carobotics.hardware.Solenoid;
 import org.carobotics.hardware.Compressor;
 import org.carobotics.hardware.Talon;
+import org.carobotics.hardware.DigitalInput;
 import org.carobotics.logic.LiftyThingMappingThread;
 import org.carobotics.logic.ThwackerMappingThread;
 import org.carobotics.logic.TalonTankDriveMappingThread;
@@ -42,7 +43,7 @@ public class Robot2014 extends IterativeRobot{
     TalonDriveBase driveBase;
     FourStickDriverStation driverStation;
     Solenoid shooter1, shooter2;
-    Solenoid leadTop, leadBottom, liftTop, liftBottom;
+    DigitalInput leadTop, leadBottom, liftTop, liftBottom;
     // Thread Manager
     ThreadManager threadManager = new ThreadManager();
     // Logic Threads (stuff from org.carobotics.logic)
@@ -74,16 +75,16 @@ public class Robot2014 extends IterativeRobot{
         
         //plug into digital output on the digital sidecar
         driveBase = new TalonDriveBase(1, 2);
-        leadScrew = new Talon(3);//active
+        leadScrew = new Talon(3);
         liftyThing = new LiftyThing(4, 6, 1);
         
         //plug into digital input on the digital sidecar
         shooter1 = new Solenoid(1);
         shooter2 = new Solenoid(2); 
-        leadTop = new Solenoid(3);//active
-        leadBottom = new Solenoid(4);
-        liftTop = new Solenoid(5);
-        liftBottom = new Solenoid(6);
+        leadTop = new DigitalInput(11);
+        leadBottom = new DigitalInput(12);
+        liftTop = new DigitalInput(13);
+        liftBottom = new DigitalInput(14);
         comp = new Compressor(7, 8);
         thwacker = new Thwacker(shooter1, shooter2, comp);
         
