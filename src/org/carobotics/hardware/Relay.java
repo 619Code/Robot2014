@@ -14,6 +14,11 @@ public class Relay {
         relay.setDirection(Direction.kBoth);
     }
     
+    public Relay(int channel){
+        relay = new edu.wpi.first.wpilibj.Relay(channel);
+        relay.setDirection(Direction.kBoth);
+    }//end Relay constructor
+    
     public void setForward(){
         relay.set(Value.kForward);
     }

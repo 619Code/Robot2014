@@ -43,7 +43,7 @@ public class LiftyThingMappingThread extends RobotThread {
     
     protected void cycle() {
         
-        if(liftBottom.get()){
+        if(!liftBottom.get()){
             System.out.println("LIMIT SWITCH WORKS MUDDER FUCKER!!!");
         }//end if
         

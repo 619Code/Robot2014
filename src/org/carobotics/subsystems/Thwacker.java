@@ -44,7 +44,7 @@ public class Thwacker {
         shooter1.set(false);
         shooter2.set(false);
         // TODO if an error occurs this is why
-        comp.start();
+        //comp.start();
     }//end method reset
     
     //returns one of the pneumatics of the shooter

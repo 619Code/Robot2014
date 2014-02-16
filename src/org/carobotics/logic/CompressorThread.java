@@ -16,11 +16,14 @@ public class CompressorThread extends RobotThread{
     }
     
     protected void cycle() {
-        if(!comp.getPressureSwitchValue()) {
+        
+        if(comp.getPressureSwitchValue()) {
+            System.out.println("too much pressure!! stopping compressor...");
+            comp.stop();
         } else {
             comp.start();
-            comp.stop();
         }
+        
     }
     
     protected void onDestroy(){
