@@ -15,18 +15,16 @@ import org.carobotics.hardware.Compressor;
  */
 public class ThwackingAction extends Action{ 
 private Thwacker thwacker;
-private Compressor comp;
 public boolean isComplete = false;
 private long startTime;
 
-    public ThwackingAction(Thwacker thwacker, Compressor comp, int waitForDependenciesPeriod, int runPeriod, ThreadManager threadManager, Vector dependencies){// defines variables 
+    public ThwackingAction(Thwacker thwacker, int waitForDependenciesPeriod, int runPeriod, ThreadManager threadManager, Vector dependencies){// defines variables 
         super(waitForDependenciesPeriod, runPeriod, threadManager, dependencies);
         this.thwacker = thwacker;
-        this.comp = comp;
         System.out.println("[ThwackingAction] started");// Tells if it is working
     }
-    public ThwackingAction(Thwacker thwacker, Compressor comp, int waitForDependenciesPeriod, int runPeriod, ThreadManager threadManager, Action dependency){
-        this(thwacker, comp, waitForDependenciesPeriod, runPeriod, threadManager, new Vector());
+    public ThwackingAction(Thwacker thwacker, int waitForDependenciesPeriod, int runPeriod, ThreadManager threadManager, Action dependency){
+        this(thwacker, waitForDependenciesPeriod, runPeriod, threadManager, new Vector());
         super.addDependency(dependency);
     }
     
@@ -37,11 +35,10 @@ private long startTime;
     public void begin() {
         startTime = System.currentTimeMillis();
         thwacker.fire();
-        //activates compressor for a certain amount of time
     }
 
     protected void cycle() {
-        
+        thwacker.fire();
     }
 }
 

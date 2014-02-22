@@ -1,0 +1,7 @@
+The subsystems package contains objects that are made up of things from the
+hardware package, these objects are then used in Action threads and mapping
+threads.
+
+Subsystems are not required, but they make the coding easier overall, as you can
+just make an object, fill it with all the hardware you need and make the small
+little methods that you need, as opposed to constantly making the hardware 

@@ -5,13 +5,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Student/Documents/NetBeansProjects/Robot2014/src/org/carobotics/hardware/Compressor.java</file>
             <file>file:/C:/Users/Student/Documents/NetBeansProjects/Robot2014/src/org/carobotics/main/Robot2014.java</file>
-            <file>file:/C:/Users/Student/Documents/NetBeansProjects/Robot2014/src/org/carobotics/main/Robot2013TalonDriveOnly.java</file>
+            <file>file:/C:/Users/Student/Documents/NetBeansProjects/Robot2014/src/org/carobotics/hardware/Compressor.java</file>
+            <file>file:/C:/Users/Student/Documents/NetBeansProjects/Robot2014/src/org/carobotics/hardware/Relay.java</file>
+            <file>file:/C:/Users/Student/Documents/NetBeansProjects/Robot2014/src/org/carobotics/hardware/DigitalInput.java</file>
+            <file>file:/C:/Users/Student/Documents/NetBeansProjects/Robot2014/src/org/carobotics/logic/actions/RelayAction.java</file>
             <file>file:/C:/Users/Student/Documents/NetBeansProjects/Robot2014/src/org/carobotics/subsystems/LiftyThing.java</file>
+            <file>file:/C:/Users/Student/Documents/NetBeansProjects/Robot2014/src/org/carobotics/logic/actions/DumperAction.java</file>
             <file>file:/C:/Users/Student/Documents/NetBeansProjects/Robot2014/resources/META-INF/MANIFEST.MF</file>
-            <file>file:/C:/Users/Student/Documents/NetBeansProjects/Robot2014/src/org/carobotics/subsystems/TalonDriveBase.java</file>
-            <file>file:/C:/Users/Student/Documents/NetBeansProjects/Robot2014/src/org/carobotics/logic/DumperMappingThread.java</file>
+            <file>file:/C:/Users/Student/Documents/NetBeansProjects/Robot2014/src/org/carobotics/logic/CompressorThread.java</file>
         </group>
     </open-files>
 </project-private>

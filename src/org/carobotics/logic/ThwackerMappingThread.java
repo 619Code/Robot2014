@@ -18,7 +18,7 @@ public class ThwackerMappingThread extends RobotThread{
     private final static boolean DEBUG = false;
     private Thwacker thwacker;
     private Compressor comp;
-    private boolean shootersOn = true;
+    private boolean shootersReady = true;
     
     public ThwackerMappingThread(Thwacker thwacker, Compressor comp,
             FourStickDriverStation driverStation, int period, ThreadManager threadManager) {
@@ -31,18 +31,20 @@ public class ThwackerMappingThread extends RobotThread{
     protected void cycle() {
         
         if(driverStation.getThirdJoystick().getButton(Joystick.Button.TRIGGER)){
-            if(shootersOn){
+            if(shootersReady){
                 thwacker.fire();
-                shootersOn = false;
+                shootersReady = false;
             }
-        } else {
+        } 
+        else {
             //if pneumatics are messing up and not working then delete thwacker.reset();
             thwacker.reset();
-            shootersOn = true;
+            shootersReady = true;
         }
         
         if(driverStation.getThirdJoystick().getButton(Joystick.Button.BUTTON2)){
             thwacker.reset();
+            shootersReady = true;
         }//end if
         
     }

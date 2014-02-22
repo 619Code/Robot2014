@@ -9,7 +9,7 @@ package org.carobotics.main;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
-import org.carobotics.hardware.Solenoid;
+import org.carobotics.hardware.DualInputSolenoid;
 import org.carobotics.hardware.Compressor;
 import org.carobotics.hardware.Talon;
 import org.carobotics.hardware.DigitalInput;
@@ -37,7 +37,7 @@ import org.carobotics.subsystems.TalonDriveBase;
  */
 public class Robot2014 extends IterativeRobot{
     
-    // Robot Systems (stuff from org.carobotics.subsystems)
+    // Robot Systems (stu.0ff from org.carobotics.subsystems)
     Relay compRelay;
     Compressor comp;
     Talon leadScrew;
@@ -45,7 +45,8 @@ public class Robot2014 extends IterativeRobot{
     LiftyThing liftyThing;
     TalonDriveBase driveBase;
     FourStickDriverStation driverStation;
-    Solenoid shooter1, shooter2;
+    DualInputSolenoid shooter1, bleedAir1;
+    DualInputSolenoid shooter2, bleedAir2;
     DigitalInput leadTop, leadBottom, liftTop, liftBottom;
     // Thread Manager
     ThreadManager threadManager = new ThreadManager();
@@ -78,20 +79,22 @@ public class Robot2014 extends IterativeRobot{
         driverStation = new FourStickDriverStation(1, 2, 3, 4);
         
         //plug into digital output on the digital sidecar
-        driveBase = new TalonDriveBase(1, 2);
-        leadScrew = new Talon(3);
-        liftyThing = new LiftyThing(4, 6, 4);
+        driveBase = new TalonDriveBase(3, 2);
+        leadScrew = new Talon(1);
+        //liftyThing = new LiftyThing(4, 6, 4);
         
         //plug into digital input on the digital sidecar
         //compRelay = new Relay(7);
-        shooter1 = new Solenoid(2);
-        shooter2 = new Solenoid(3); 
+        shooter1 = new DualInputSolenoid(1, 2);
+        shooter2 = new DualInputSolenoid(3, 4);
+        bleedAir1 = new DualInputSolenoid(5, 6);
+        bleedAir2 = new DualInputSolenoid(7, 8);
         leadTop = new DigitalInput(11);
         leadBottom = new DigitalInput(12);
         liftTop = new DigitalInput(13);
         liftBottom = new DigitalInput(14);
         comp = new Compressor(1, 7);
-        thwacker = new Thwacker(shooter1, shooter2, comp);
+        thwacker = new Thwacker(shooter1, shooter2, bleedAir1, bleedAir2);
         
         
         
@@ -104,17 +107,12 @@ public class Robot2014 extends IterativeRobot{
         //if you have something not from org.carobotics.logic.actions in here, then you're doing it wrong!!
         //you'll crash the bot when it changes from autonomous to tele-op
 
-        
-        
-        
+        compressorThread = new CompressorThread(comp, 10, threadManager);//makes the compressor thread that can be killed
         forwardAction = new TimeMovementAction(driveBase, 1, 1000, 1000, 1, 1, threadManager);//moves forward 1 second
+        thwackingAction = new ThwackingAction(thwacker, 1, 1000, threadManager, forwardAction);//fires the ball after forwardAction is executed and waits a second until the next action starts
         
-        relayAction = new RelayAction(compRelay, 1, 2000, threadManager, forwardAction);// TODO: needs to be changed to start before the forward action
-        
-        thwackingAction = new ThwackingAction(thwacker, comp, 1, 1000, threadManager, relayAction);//fires the ball after forwardAction is executed and waits a second until the next action starts
-        
+        compressorThread.start();//starts the compressor assuming there isn't too much pressure already in the pneumatics
         forwardAction.begin(); //starts moving robot forward for one second
-        relayAction.begin();
         thwackingAction.begin();//begins thwackingAction once liftyAction is
         
     }
@@ -127,19 +125,20 @@ public class Robot2014 extends IterativeRobot{
     }
 
     public void teleopInit() {
+        
         threadManager.killAllThreads(); // DO NOT REMOVE!!!
         
         //initialize the threads
         thwackerThread = new ThwackerMappingThread(thwacker, comp, driverStation, 10, threadManager);
         driveThread = new TalonTankDriveMappingThread(driveBase, driverStation, 10, threadManager);
-        liftyThread = new LiftyThingMappingThread(liftyThing, leadScrew, leadTop, leadBottom, liftTop, liftBottom, driverStation, 10, threadManager);
+        //liftyThread = new LiftyThingMappingThread(liftyThing, leadScrew, leadTop, leadBottom, liftTop, liftBottom, driverStation, 10, threadManager);
         compressorThread = new CompressorThread(comp, 10, threadManager);
         
         //start the threads
         thwackerThread.start();//starts thread for thwacker shooter
         driveThread.start();//starts thread for driving
-        liftyThread.start();//starts thread for lifty thing
-        compressorThread.start();
+        //liftyThread.start();//starts thread for lifty thing
+        compressorThread.start();//starts the compressor assuming there isn't too much pressure already in the pneumatics
 
     }
 

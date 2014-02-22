@@ -21,6 +21,7 @@ public class CompressorThread extends RobotThread{
             System.out.println("too much pressure!! stopping compressor...");
             comp.stop();
         } else {
+            //System.out.println("compressor is on");
             comp.start();
         }
         

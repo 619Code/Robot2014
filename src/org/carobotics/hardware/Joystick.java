@@ -99,8 +99,8 @@ public class Joystick {
     
     
     public double getAxis(int axis, boolean overrideReverse){
-        System.out.println("RAXIS= "+reversedAxis.length);
-        System.out.println("AXIS = "+axis);
+        //System.out.println("RAXIS= "+reversedAxis.length);
+        //System.out.println("AXIS = "+axis);
         if(!overrideReverse && reversedAxis[axis]){
             return -1.0 * getAxis(axis, true);
         }

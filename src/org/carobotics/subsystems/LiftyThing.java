@@ -15,14 +15,20 @@ import org.carobotics.hardware.Talon;
 public class LiftyThing {
     protected Servo servo;
     protected Talon motor;
-    protected DigitalInput limit;
+    //protected Talon leadScrewmotor;
+    protected DigitalInput leadTop, leadBottom;
+    protected DigitalInput liftTop, liftBottom;
     private boolean isUnlocked = true;
     
-    public LiftyThing(int motor, int servo, int limit) {
+    public LiftyThing(int motor, int servo, /*int leadScrewmotor,*/ int leadTop, int leadBottom, int liftTop, int liftBottom) {
         this.motor = new Talon(motor);
         this.servo = new Servo(servo);
-        this.servo.setRaw(1);       
-        this.limit = new DigitalInput(limit);
+        this.servo.setRaw(1);
+        //this.leadScrewmotor = new Talon(leadScrewmotor);
+        this.leadTop = new DigitalInput(leadTop);
+        this.leadBottom = new DigitalInput(leadBottom);
+        this.liftTop = new DigitalInput(leadTop);
+        this.liftBottom = new DigitalInput(leadTop);
     }
 
     public void lock() {
@@ -51,7 +57,19 @@ public class LiftyThing {
         return motor;
     }
     
-    public boolean isLimit() {
-        return limit.get();
+    public boolean isLimitLeadTop() {
+        return leadTop.get();
+    }
+    
+    public boolean isLimitLeadBottom() {
+        return leadBottom.get();
+    }
+    
+    public boolean isLimitLiftTop() {
+        return liftTop.get();
+    }
+    
+    public boolean isLimitLiftBottom() {
+        return liftBottom.get();
     }
 }

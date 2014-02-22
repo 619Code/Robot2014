@@ -43,16 +43,23 @@ public class LiftyThingMappingThread extends RobotThread {
     
     protected void cycle() {
         
-        if(!liftBottom.get()){
-            System.out.println("LIMIT SWITCH WORKS MUDDER FUCKER!!!");
-        }//end if
+        /*
         
+        For window motor:
+        
+        */
+        
+        //as long as you are pressing the button and moving the joystick, the 
+        //lift will change, the second you let go of the button the joystick 
+        //will stop moving the lift
        if (driverStation.getFourthJoystick().getButton(Joystick.Button.BUTTON2)) {
             double scalePercent = driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Z);
             if (scalePercent < 0.3) {
                 scalePercent = 0.3;
             }
-            if(!liftyThing.isLimit() && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) > 0) {
+            if(liftyThing.isLimitLiftBottom() && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) > 0) {
+                liftyThing.getMotor().set(0);
+            } else if(liftyThing.isLimitLiftTop() && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) < 0){
                 liftyThing.getMotor().set(0);
             } else {
                 liftyThing.getMotor().set(driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent);
@@ -61,13 +68,20 @@ public class LiftyThingMappingThread extends RobotThread {
            liftyThing.getMotor().set(0);
         }
        
+       /*
+       
+       For lead screw:
+       
+       */
+       
+       //once button is pushed the leadscrew automatically goes in the needed direction
       if(driverStation.getFourthJoystick().getButton(Joystick.Button.BUTTON7)){
           //if lift mechanism is at top
           if(atTop){
               //reverse the talon to go down
               leadScrew.set(-1);
               //if the lift mechanism hits the bottom limit switch
-              if(leadBottom.get()){
+              if(liftyThing.isLimitLeadBottom()){
                   //stop the talon
                   leadScrew.set(0);
                   atTop = false;//change the variable to say the mechanism is at bottom
@@ -77,16 +91,18 @@ public class LiftyThingMappingThread extends RobotThread {
               //make talon go up
               leadScrew.set(1);
               //if the lift mechanism hits the top limit swtich
-              if(leadTop.get()){
+              if(liftyThing.isLimitLeadTop()){
                   //stop the talon
                   leadScrew.set(0);
                   atTop = true;//change the variable to say the mechanism is at top
               }//end if
           }//end if-else   
-      }else{
-          //have the talon normally stay in position
+      }//end if
+      
+      //pulling the trigger stops the lead screw as long as the trigger is pulled
+      if(driverStation.getFourthJoystick().getButton(Joystick.Button.TRIGGER)){
           leadScrew.set(0);
-      }
+      }//end if
        
     }
 }

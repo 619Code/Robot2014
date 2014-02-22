@@ -20,7 +20,7 @@ import org.carobotics.subsystems.MecanumDriveBase;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot2014MechanumdriveOnly extends IterativeRobot{
+public class Robot2014MecanumDriveOnly extends IterativeRobot{
     
     // Robot Systems (stuff from org.carobotics.subsystems)
     FourStickDriverStation driverStation;
@@ -41,7 +41,7 @@ public class Robot2014MechanumdriveOnly extends IterativeRobot{
         System.out.println("\n");
         System.out.println("//////////////////////////////////////////////////////");
         System.out.println("//     Cavalier Robotics                 TEAM 619   //");
-        System.out.println("//     2014 Mecanum Drive Only                      //");
+        System.out.println("//     2014 Jaguar Mecanum Drive Only               //");
         System.out.println("//////////////////////////////////////////////////////\n");
         
         // Create all robot subsystems (i.e. stuff from org.carobotics.subsystems)
