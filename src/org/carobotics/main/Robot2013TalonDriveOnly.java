@@ -27,8 +27,6 @@ import org.carobotics.subsystems.FourStickDriverStation;
  */
 public class Robot2013TalonDriveOnly extends IterativeRobot {
      // Robot Systems (stuff from org.carobotics.subsystems)
-    Talon leftTalon, leftTalon2;
-    Talon rightTalon, rightTalon2;
     FourStickDriverStation driverStation;
     //FrisbeeDumper dumper;
     AutonomousSelector autonomousSelector;
@@ -59,8 +57,6 @@ public class Robot2013TalonDriveOnly extends IterativeRobot {
         // If you are creating something not from org.carobotics.subsystems, YER DOING IT WRONG
         
         driverStation = new FourStickDriverStation(1, 2, 3, 4);
-        leftTalon.setReversed(true);
-        leftTalon2.setReversed(true);
         driveBase = new TalonDriveBase(1, 2);
     }
 
@@ -79,9 +75,8 @@ public class Robot2013TalonDriveOnly extends IterativeRobot {
          */
         
         
-        
-        AutonomousBumpThread autoBump = new AutonomousBumpThread(leftTalon, rightTalon, leftTalon2, rightTalon2, driverStation, 20, threadManager);
-        if(autonomousSelector.getRunMode() == AutonomousSelector.RunMode.DO_SOMETHING) autoBump.start();
+       
+      
     }
 
     /**
@@ -95,9 +90,6 @@ public class Robot2013TalonDriveOnly extends IterativeRobot {
 
         driveThread = new TalonTankDriveMappingThread(driveBase, driverStation, 15, threadManager);
         driveThread.start(); 
-        
-        fanThread = new TalonFanThread(driverStation, fanTalon, 20, threadManager);
-        fanThread.start();
            
     }
     

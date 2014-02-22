@@ -16,6 +16,7 @@ public class TalonDriveBase extends TankDriveBase {
 
     public TalonDriveBase(int leftMotorTalonID, int rightMotorTalonID) {
         leftMotor = new Talon(leftMotorTalonID);
+        leftMotor.setReversed(true);
         rightMotor = new Talon(rightMotorTalonID);
         rightMotor.setReversed(true);
     }
