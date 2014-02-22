@@ -9,10 +9,12 @@ package org.carobotics.main;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
-import org.carobotics.hardware.Solenoid;
+import org.carobotics.hardware.DualInputSolenoid;
 import org.carobotics.hardware.Compressor;
 import org.carobotics.hardware.Talon;
 import org.carobotics.hardware.DigitalInput;
+import org.carobotics.hardware.Servo;
+import org.carobotics.hardware.Relay;
 import org.carobotics.logic.LiftyThingMappingThread;
 import org.carobotics.logic.ThwackerMappingThread;
 import org.carobotics.logic.TalonTankDriveMappingThread;
@@ -37,13 +39,20 @@ public class Robot2014 extends IterativeRobot{
     
     // Robot Systems (stuff from org.carobotics.subsystems)
     Compressor comp;
+    Talon leftDrive, rightDrive;
     Talon leadScrew;
+    Talon lifter;
+    Servo servo;
+    Relay compRelay;
+    DigitalInput leadTop, leadBottom;
+    DigitalInput liftTop, liftBottom;
+    DigitalInput pressureSwitch;
     Thwacker thwacker;
     LiftyThing liftyThing;
     TalonDriveBase driveBase;
     FourStickDriverStation driverStation;
-    Solenoid shooter1, shooter2;
-    DigitalInput leadTop, leadBottom, liftTop, liftBottom;
+    DualInputSolenoid shooter1, shooter2;
+    DualInputSolenoid bleedAir1, bleedAir2;
     // Thread Manager
     ThreadManager threadManager = new ThreadManager();
     // Logic Threads (stuff from org.carobotics.logic)
@@ -71,25 +80,39 @@ public class Robot2014 extends IterativeRobot{
 
         // Create all robot subsystems (i.e. stuff from org.carobotics.subsystems)
         // If you are creating something not from org.carobotics.subsystems, YER DOING IT WRONG
+        
+        //driver station
         driverStation = new FourStickDriverStation(1, 2, 3, 4);
         
         //plug into digital output on the digital sidecar
-        driveBase = new TalonDriveBase(1, 2);
-        leadScrew = new Talon(3);
-        liftyThing = new LiftyThing(4, 6, 1);
+        leadScrew = new Talon(1);
+        rightDrive = new Talon(2);
+        leftDrive = new Talon(3);
+        lifter = new Talon(4);
+        servo = new Servo(5);
+        
         
         //plug into digital input on the digital sidecar
-        shooter1 = new Solenoid(1);
-        shooter2 = new Solenoid(2); 
-        leadTop = new DigitalInput(11);
-        leadBottom = new DigitalInput(12);
-        liftTop = new DigitalInput(13);
-        liftBottom = new DigitalInput(14);
-        comp = new Compressor(7, 8);
-        thwacker = new Thwacker(shooter1, shooter2, comp);
+        leadTop = new DigitalInput(1);
+        leadBottom = new DigitalInput(2);
+        liftTop = new DigitalInput(3);
+        liftBottom = new DigitalInput(4);
+        pressureSwitch = new DigitalInput(5);
         
+        //plug into pneumatics bumper
+        shooter1 = new DualInputSolenoid(1, 2);
+        shooter2 = new DualInputSolenoid(3, 4); 
+        bleedAir1 = new DualInputSolenoid(5, 6);
+        bleedAir2 = new DualInputSolenoid(7, 8);
         
+        //plugs into relay section of digital sidecar
+        compRelay = new Relay(1);
         
+        //subsystems
+        comp = new Compressor(pressureSwitch, compRelay);
+        driveBase = new TalonDriveBase(leftDrive, rightDrive);
+        thwacker = new Thwacker(shooter1, shooter2, bleedAir1, bleedAir2);
+        liftyThing = new LiftyThing(lifter, leadScrew, leadTop, leadBottom, liftTop, liftBottom); 
         
     }
 
@@ -99,7 +122,7 @@ public class Robot2014 extends IterativeRobot{
         //if you have something not from org.carobotics.logic.actions in here, then you're doing it wrong!!
         //you'll crash the bot when it changes from autonomous to tele-op
         forwardAction = new TimeMovementAction(driveBase, 1, 1000, 1000, 1, 1, threadManager);//moves forward 1 second
-        thwackingAction = new ThwackingAction(thwacker, comp, 1, 1000, threadManager, forwardAction);//fires the ball after forwardAction is executed and waits a second until the next action starts
+        thwackingAction = new ThwackingAction(thwacker, 1, 1000, threadManager, forwardAction);//fires the ball after forwardAction is executed and waits a second until the next action starts
         
         forwardAction.begin(); //starts moving robot forward for one second
         thwackingAction.begin();//begins thwackingAction once liftyAction is
@@ -118,7 +141,7 @@ public class Robot2014 extends IterativeRobot{
         //initialize the threads
         thwackerThread = new ThwackerMappingThread(thwacker, comp, driverStation, 10, threadManager);
         driveThread = new TalonTankDriveMappingThread(driveBase, driverStation, 10, threadManager);
-        liftyThread = new LiftyThingMappingThread(liftyThing, leadScrew, leadTop, leadBottom, liftTop, liftBottom, driverStation, 10, threadManager);
+        liftyThread = new LiftyThingMappingThread(liftyThing, driverStation, 10, threadManager);
         compressorThread = new CompressorThread(comp, 10, threadManager);
         
         //start the threads
@@ -126,7 +149,6 @@ public class Robot2014 extends IterativeRobot{
         driveThread.start();//starts thread for driving
         liftyThread.start();//starts thread for lifty thing
         compressorThread.start();
-        System.out.println("Compressor should be working now...");
 
     }
 
@@ -145,4 +167,5 @@ public class Robot2014 extends IterativeRobot{
 
     public void disabledContinuous() {
     }
+    
 }

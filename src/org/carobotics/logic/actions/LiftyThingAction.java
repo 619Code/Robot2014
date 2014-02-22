@@ -37,7 +37,9 @@ public class LiftyThingAction extends Action {
 
     public void begin() {
         startTime = System.currentTimeMillis();
-        liftyThing.unlock();
+        if(!liftyThing.isLimitLiftTop()){
+            liftyThing.getMotor().set(-0.3);
+        }else{}//end if-else
     }
 
     protected void cycle() {

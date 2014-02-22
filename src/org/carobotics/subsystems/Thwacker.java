@@ -35,7 +35,7 @@ public class Thwacker {
         if(shooter1.get() && shooter2.get()){
             return true;
         }else if(shooter1.get() || shooter2.get()){
-            System.out.println("FUCK FUCK FUCK!!!! THE PNEUMATICS ARE OFF!! STAHP!!!!!");
+            System.out.println("AHHHHHHHHHHH OH NOES!!!! THE PNEUMATICS ARE OFF!! STAHP!!!!!");
             return false;
         }//end if else
         
@@ -47,12 +47,16 @@ public class Thwacker {
     public void reset(){
         shooter1.set(false);
         shooter2.set(false);
+        bleedAir1.set(false);
+        bleedAir2.set(false);
     }//end method fire
     
     //deactivates the solenoids casuing them to return
     public void fire(){
         shooter1.set(true);
         shooter2.set(true);
+        bleedAir1.set(true);
+        bleedAir2.set(true);
     }//end method reset
     
     //returns one of the pneumatics of the shooter

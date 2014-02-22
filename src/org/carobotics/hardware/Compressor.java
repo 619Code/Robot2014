@@ -19,9 +19,15 @@ public class Compressor {
         this.pressureSwitch = new DigitalInput(pressureSwitch);
     }
     
+    public Compressor(DigitalInput pressureSwitch, Relay compRelay){
+        this.relay = compRelay;
+        this.pressureSwitch = pressureSwitch;
+    }//end Compressor constructor
+    
     public Compressor(int pressureSwitchSlot, int pressureSwitchChannel, int compresssorRelaySlot, int compressorRelayChannel) {
         comp = new edu.wpi.first.wpilibj.Compressor(pressureSwitchSlot, pressureSwitchChannel, compresssorRelaySlot, compressorRelayChannel);
     }
+    
     
     public void start(){
         
