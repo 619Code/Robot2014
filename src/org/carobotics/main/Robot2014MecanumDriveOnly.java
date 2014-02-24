@@ -41,7 +41,7 @@ public class Robot2014MecanumDriveOnly extends IterativeRobot{
         System.out.println("\n");
         System.out.println("//////////////////////////////////////////////////////");
         System.out.println("//     Cavalier Robotics                 TEAM 619   //");
-        System.out.println("//     2014 Jaguar Mecanum Drive Only               //");
+        System.out.println("//     2014 Mecanum Drive Only               //");
         System.out.println("//////////////////////////////////////////////////////\n");
         
         // Create all robot subsystems (i.e. stuff from org.carobotics.subsystems)

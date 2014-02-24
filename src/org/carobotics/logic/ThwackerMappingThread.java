@@ -30,6 +30,12 @@ public class ThwackerMappingThread extends RobotThread{
 
     protected void cycle() {
         
+        double scalePercent = driverStation.getThirdJoystick().getAxis(Joystick.Axis.AXIS_Z);
+            if (scalePercent < 0.3)
+                scalePercent = 0.3;
+            
+        thwacker.getCamera().set(driverStation.getThirdJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent);
+        
         if(driverStation.getThirdJoystick().getButton(Joystick.Button.TRIGGER)){
             if(shootersReady){
                 thwacker.fire();

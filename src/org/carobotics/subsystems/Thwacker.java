@@ -1,6 +1,7 @@
-package org.carobotics.subsystems;
+ package org.carobotics.subsystems;
 
 import org.carobotics.hardware.DualInputSolenoid;
+import org.carobotics.hardware.Servo;
 
 /**
  *
@@ -10,18 +11,21 @@ import org.carobotics.hardware.DualInputSolenoid;
  * @author Student
  */
 public class Thwacker {
+    protected Servo camera;
     protected DualInputSolenoid shooter1, bleedAir1;
     protected DualInputSolenoid shooter2, bleedAir2;
     
     //initiates the Thwacker object variables
-    public Thwacker(DualInputSolenoid shooter1, DualInputSolenoid shooter2, DualInputSolenoid bleedAir1, DualInputSolenoid bleedAir2){
+    public Thwacker(Servo camera, DualInputSolenoid shooter1, DualInputSolenoid shooter2, DualInputSolenoid bleedAir1, DualInputSolenoid bleedAir2){
+        this.camera = camera;
         this.shooter1 = shooter1;
         this.shooter2 = shooter2;
         this.bleedAir1 = bleedAir1;
         this.bleedAir2 = bleedAir2;
     }//end Thwacker object
     
-    public Thwacker(int shooter11, int shooter12, int shooter21, int shooter22, int bleedAir11, int bleedAir12, int bleedAir21, int bleedAir22){
+    public Thwacker(int camera,int shooter11, int shooter12, int shooter21, int shooter22, int bleedAir11, int bleedAir12, int bleedAir21, int bleedAir22){
+        this.camera = new Servo(camera);
         this.shooter1 = new DualInputSolenoid(shooter11, shooter12);
         this.shooter2 = new DualInputSolenoid(shooter21, shooter22);
         this.bleedAir1 = new DualInputSolenoid(bleedAir11, bleedAir12);
@@ -58,6 +62,11 @@ public class Thwacker {
         bleedAir1.set(true);
         bleedAir2.set(true);
     }//end method reset
+    
+    //returns the camera's servo (that changes camera's angle)
+    public Servo getCamera(){
+        return camera;
+    }//end Servo getCamera
     
     //returns one of the pneumatics of the shooter
     public DualInputSolenoid getShooter1(){

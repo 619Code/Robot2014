@@ -12,7 +12,7 @@ public class Servo {
 //        servo.setBounds(245, 0, 0, 0, 11);
     }
 
-    public Servo(int slot, int channel) {
+    public Servo(int slot/*slot of digital sidecar module*/, int channel/*slot in digital sidecar*/) {
          servo = new edu.wpi.first.wpilibj.Servo(slot, channel);
 //        servo.setBounds(255, 130, 127, 125, 0); // TODO: Not working yet
 //        servo.setBounds(245, 0, 0, 0, 11);

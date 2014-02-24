@@ -42,8 +42,8 @@ public class Robot2014 extends IterativeRobot{
     Talon leftDrive, rightDrive;
     Talon leadScrew;
     Talon lifter;
-    Servo servo;
     Relay compRelay;
+    Servo camera;
     DigitalInput leadTop, leadBottom;
     DigitalInput liftTop, liftBottom;
     DigitalInput pressureSwitch;
@@ -89,7 +89,7 @@ public class Robot2014 extends IterativeRobot{
         rightDrive = new Talon(2);
         leftDrive = new Talon(3);
         lifter = new Talon(4);
-        servo = new Servo(5);
+        
         
         
         //plug into digital input on the digital sidecar
@@ -98,6 +98,7 @@ public class Robot2014 extends IterativeRobot{
         liftTop = new DigitalInput(3);
         liftBottom = new DigitalInput(4);
         pressureSwitch = new DigitalInput(5);
+        camera = new Servo(6);
         
         //plug into pneumatics bumper
         shooter1 = new DualInputSolenoid(1, 2);
@@ -111,7 +112,7 @@ public class Robot2014 extends IterativeRobot{
         //subsystems
         comp = new Compressor(pressureSwitch, compRelay);
         driveBase = new TalonDriveBase(leftDrive, rightDrive);
-        thwacker = new Thwacker(shooter1, shooter2, bleedAir1, bleedAir2);
+        thwacker = new Thwacker(camera, shooter1, shooter2, bleedAir1, bleedAir2);
         liftyThing = new LiftyThing(lifter, leadScrew, leadTop, leadBottom, liftTop, liftBottom); 
         
     }
@@ -123,9 +124,11 @@ public class Robot2014 extends IterativeRobot{
         //you'll crash the bot when it changes from autonomous to tele-op
         forwardAction = new TimeMovementAction(driveBase, 1, 1000, 1000, 1, 1, threadManager);//moves forward 1 second
         thwackingAction = new ThwackingAction(thwacker, 1, 1000, threadManager, forwardAction);//fires the ball after forwardAction is executed and waits a second until the next action starts
+        compressorThread = new CompressorThread(comp, 10, threadManager);
         
         forwardAction.begin(); //starts moving robot forward for one second
         thwackingAction.begin();//begins thwackingAction once liftyAction is
+        compressorThread.start();
         
     }
 
