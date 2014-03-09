@@ -3,20 +3,20 @@ package org.carobotics.networking;
 import java.io.DataInputStream;
 import java.io.IOException;
 import javax.microedition.io.ServerSocketConnection;
-import org.carobotics.logic.InputManager;
+import org.carobotics.logic.RemoteProcessedCamera;
 import org.carobotics.logic.RobotThread;
 import org.carobotics.logic.ThreadManager;
 
 public class PacketReceiver extends RobotThread {
-    InputManager input;
-    DataInputStream dataIn = null;
-    ServerSocketConnection ssc;
     
+    private DataInputStream dataIn = null;
+    private ServerSocketConnection ssc;
+    private RemoteProcessedCamera cam;
 
-    public PacketReceiver(int period, ThreadManager threadManager, ServerSocketConnection ssc, InputManager input) {
+    public PacketReceiver(int period, ThreadManager threadManager, ServerSocketConnection ssc, RemoteProcessedCamera cam) {
         super(period, threadManager);
-        this.input = input;
         this.ssc = ssc;
+        this.cam = cam;
     }
 
     protected void cycle() {
@@ -30,7 +30,8 @@ public class PacketReceiver extends RobotThread {
         }
         if(dataIn != null) {
             try {
-                input.addAxis(dataIn.readUTF(), dataIn.readDouble(), dataIn.readBoolean(),  dataIn.readBoolean());
+                cam.setHotGoal(dataIn.readInt());
+//                input.addAxis(dataIn.readUTF(), dataIn.readDouble(), dataIn.readBoolean(),  dataIn.readBoolean());
             } catch (IOException ex) {
                 ex.printStackTrace();
                 dataIn = null;

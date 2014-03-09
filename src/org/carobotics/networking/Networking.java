@@ -7,7 +7,7 @@ package org.carobotics.networking;
 import java.io.IOException;
 import javax.microedition.io.Connector;
 import javax.microedition.io.ServerSocketConnection;
-import org.carobotics.logic.InputManager;
+import org.carobotics.logic.RemoteProcessedCamera;
 import org.carobotics.logic.ThreadManager;
 
 /**
@@ -19,7 +19,7 @@ public class Networking {
     public PacketSender sender;
     public PacketReceiver receiver;
     
-    public Networking(ThreadManager manager, int period, InputManager inputs) {
+    public Networking(ThreadManager manager, int period/*, InputManager inputs*/, RemoteProcessedCamera cam) {
         ServerSocketConnection ssc = null;
         try {
             ssc = (ServerSocketConnection) Connector.open("socket://:1735");
@@ -27,7 +27,7 @@ public class Networking {
             ex.printStackTrace();
         }
         sender = new PacketSender(ssc, period, manager);
-        receiver = new PacketReceiver(period, manager, ssc, inputs);
+        receiver = new PacketReceiver(period, manager, ssc/*, inputs*/, cam);
     }
     
     public void startThreads() {
