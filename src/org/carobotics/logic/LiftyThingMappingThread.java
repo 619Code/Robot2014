@@ -6,6 +6,7 @@
 
 package org.carobotics.logic;
 import org.carobotics.hardware.Joystick;
+import org.carobotics.hardware.Talon;
 import org.carobotics.subsystems.LiftyThing;
 import org.carobotics.subsystems.FourStickDriverStation;
 
@@ -19,7 +20,8 @@ import org.carobotics.subsystems.FourStickDriverStation;
 public class LiftyThingMappingThread extends RobotThread {
     
     protected FourStickDriverStation driverStation;
-    private boolean atTop = false;
+    private boolean topLimit;
+    private boolean botLimit;
     private LiftyThing liftyThing;
     
     public LiftyThingMappingThread(LiftyThing liftyThing, FourStickDriverStation driverStation, int period, ThreadManager threadManager){
@@ -29,6 +31,9 @@ public class LiftyThingMappingThread extends RobotThread {
     }
     
     protected void cycle() {
+        
+        this.topLimit = liftyThing.isLimitLeadTop();
+        this.botLimit = liftyThing.isLimitLeadBottom();
         
         double scalePercent = driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Z);
             if (scalePercent < 0.3)
@@ -47,138 +52,36 @@ public class LiftyThingMappingThread extends RobotThread {
             
             if(liftyThing.isLimitLiftBottom() && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) > 0) {
                 liftyThing.getMotor().set(0);
-                liftyThing.getMotor().setReversed(true);
+                //liftyThing.getMotor().setReversed(true);
             } else if(liftyThing.isLimitLiftTop() && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) < 0){
                 liftyThing.getMotor().set(0);
-                liftyThing.getMotor().setReversed(false);
+                //liftyThing.getMotor().setReversed(false);
             } else {
                 liftyThing.getMotor().set(driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent);
             }
         }else{
            liftyThing.getMotor().set(0);
-        }
+        }//if-else
+        
         /*
        
        For lead screw:
        
-       */          
-//        if(driverStation.getFourthJoystick().getButton(Joystick.Button.BUTTON3)){  
-//            
-//            if(liftyThing.isLimitLeadBottom() && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) > 0) {
-//                //liftyThing.getLeadScrew().set(0);
-//                liftyThing.getLeadScrew().setReversed(true);
-//            } else if(liftyThing.isLimitLeadTop() && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) < 0){
-//                //liftyThing.getLeadScrew().set(0);
-//                liftyThing.getLeadScrew().setReversed(false);
-//            } else {
-//                liftyThing.getLeadScrew().set(driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent);
-//            }
-//        }else{
-//            liftyThing.getLeadScrew().set(0);   
-//        }//end if-else
-
-        
-        
-            if(liftyThing.isLimitLeadTop()){
-                atTop = true;
-                
-                if(driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) > 0){
-                    liftyThing.getLeadScrew().set(0);
-                }//end if
-                
-                liftyThing.getLeadScrew().setReversed(true);
-                System.out.println("Reached the top");
-            }//end if
-
-            if(liftyThing.isLimitLeadBottom()){
-                atTop = false;
-                
-                if(driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) < 0){
-                    
-                }//end if
-                
-                liftyThing.getLeadScrew().setReversed(false);
-                System.out.println("Reached the bottom");
-            }//end if
-       
-//           if(atTop && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) < 0){
-//              //reverse the talon to go down
-//              liftyThing.getLeadScrew().set(driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y)*scalePercent);
-//              //if the lift mechanism hits the bottom limit switch
-//              if(liftyThing.isLimitLeadBottom()){
-//                  //stop the talon
-//                  liftyThing.getLeadScrew().set(0);
-//                  atTop = false;//change the variable to say the mechanism is at bottom
-//                  System.out.println("Reached the bottom");
-//              }//end if
-//            //otherwise if the lift mechanism is at bottom
-//            }else{
-//                  //make talon go up
-//                  liftyThing.getLeadScrew().set(driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y)*scalePercent);
-//                  //if the lift mechanism hits the top limit swtich
-//                  if(liftyThing.isLimitLeadTop()){
-//                      //stop the talon
-//                      liftyThing.getLeadScrew().set(0);
-//                      atTop = true;//change the variable to say the mechanism is at top
-//                      System.out.println("Reached the top");
-//                  }//end if
-//            }//end if-else
-//
-//          //pulling the trigger stops the lead screw as long as the trigger is pulled
-//          if(driverStation.getFourthJoystick().getButton(Joystick.Button.TRIGGER)){
-//              liftyThing.getLeadScrew().set(0);
-//          }//end if
-           
-       
-       /*
-       
-       For lead screw:
-       
        */
+        
+        double input = driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent;
+        
+        Talon leadScrew = liftyThing.getLeadScrew();
+        
+        //System.out.println("input: " + input + "\ttopLmit: " + topLimit + "\tbotLimit: " + botLimit);
+        
+        if((input > 0 && !topLimit) || (input < 0 && !botLimit)) {
+            //System.out.println("first: " + (input > 0 && !topLimit) + "\tsecond: " + (input < 0 && !botLimit));
+            leadScrew.set(input);
+        } else {
+            leadScrew.set(0);
+        }
        
-//       liftyThing.getLeadScrew().set(driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y)*scalePercent);
-//       
-//       if(liftyThing.isLimitLeadTop()){
-//           atTop = true;
-//           liftyThing.getLeadScrew().setReversed(true);
-//           System.out.println("Reached the top");
-//       }//end if
-//       
-//       if(liftyThing.isLimitLeadBottom()){
-//           atTop = false;
-//           liftyThing.getLeadScrew().setReversed(false);
-//           System.out.println("Reached the bottom");
-//       }//end if
-       
-        //if lift mechanism is at top
-//        if(atTop && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) < 0){
-//              //reverse the talon to go down
-//              liftyThing.getLeadScrew().set(driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y)*scalePercent);
-//              //if the lift mechanism hits the bottom limit switch
-//              if(liftyThing.isLimitLeadBottom()){
-//                  //stop the talon
-//                  liftyThing.getLeadScrew().set(0);
-//                  atTop = false;//change the variable to say the mechanism is at bottom
-//                  System.out.println("Reached the bottom");
-//              }//end if
-//        //otherwise if the lift mechanism is at bottom
-//        }else{
-//              //make talon go up
-//              liftyThing.getLeadScrew().set(driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y)*scalePercent);
-//              //if the lift mechanism hits the top limit swtich
-//              if(liftyThing.isLimitLeadTop()){
-//                  //stop the talon
-//                  liftyThing.getLeadScrew().set(0);
-//                  atTop = true;//change the variable to say the mechanism is at top
-//                  System.out.println("Reached the top");
-//              }//end if
-//        }//end if-else
-//      
-//      //pulling the trigger stops the lead screw as long as the trigger is pulled
-//      if(driverStation.getFourthJoystick().getButton(Joystick.Button.TRIGGER)){
-//          liftyThing.getLeadScrew().set(0);
-//      }//end if
-       
-    }
-}
+    }//end cycle
+}//end class
 
