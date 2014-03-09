@@ -19,10 +19,12 @@ import org.carobotics.logic.LiftyThingMappingThread;
 import org.carobotics.logic.ThwackerMappingThread;
 import org.carobotics.logic.TalonTankDriveMappingThread;
 import org.carobotics.logic.CompressorThread;
+import org.carobotics.logic.RemoteProcessedCamera;
 import org.carobotics.logic.ThreadManager;
 import org.carobotics.logic.actions.TimeMovementAction;
 import org.carobotics.logic.actions.ThwackingAction;
 import org.carobotics.logic.actions.LiftyThingAction;
+import org.carobotics.networking.Networking;
 import org.carobotics.subsystems.Thwacker;
 import org.carobotics.subsystems.LiftyThing;
 import org.carobotics.subsystems.FourStickDriverStation;
@@ -64,7 +66,9 @@ public class Robot2014 extends IterativeRobot{
     TimeMovementAction forwardAction;
     ThwackingAction thwackingAction;
     LiftyThingAction liftyAction;
-    
+    // Networking
+    Networking network;
+    RemoteProcessedCamera cam;
     
     
     /**
@@ -113,19 +117,22 @@ public class Robot2014 extends IterativeRobot{
         comp = new Compressor(pressureSwitch, compRelay);
         driveBase = new TalonDriveBase(leftDrive, rightDrive);
         //thwacker = new Thwacker(camera, shooter1, shooter2, bleedAir1, bleedAir2);
-        liftyThing = new LiftyThing(lifter, leadScrew, leadTop, leadBottom, liftTop, liftBottom); 
+        liftyThing = new LiftyThing(lifter, leadScrew, leadTop, leadBottom, liftTop, liftBottom);
         
+        cam = new RemoteProcessedCamera();
     }
 
     public void autonomousInit() {
         
         threadManager.killAllThreads(); // DO NOT REMOVE!!!
+        
+        network = new Networking(threadManager, 40, cam);
         //if you have something not from org.carobotics.logic.actions in here, then you're doing it wrong!!
         //you'll crash the bot when it changes from autonomous to tele-op
         forwardAction = new TimeMovementAction(driveBase, 1, 1000, 1000, 1, 1, threadManager);//moves forward 1 second
         //thwackingAction = new ThwackingAction(thwacker, 1, 1000, threadManager, forwardAction);//fires the ball after forwardAction is executed and waits a second until the next action starts
         //compressorThread = new CompressorThread(comp, 10, threadManager);
-        
+        network.startThreads();
         forwardAction.begin(); //starts moving robot forward for one second
         //thwackingAction.begin();//begins thwackingAction once liftyAction is
         //compressorThread.start();

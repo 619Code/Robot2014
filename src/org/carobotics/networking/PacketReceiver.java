@@ -18,23 +18,42 @@ public class PacketReceiver extends RobotThread {
         this.ssc = ssc;
         this.cam = cam;
     }
+    
+    public void stop() {
+        try {
+            ssc.close();
+            ssc = null;
+        } catch (Exception e) { }
+    }
+    
+    public void stopRunning() {
+        super.stopRunning();
+        stop();
+    }
+    
+    public void onDestroy() {
+        super.onDestroy();
+        stop();
+    }
 
     protected void cycle() {
-        if(dataIn == null) {
-            try {
-                dataIn = ssc.acceptAndOpen().openDataInputStream();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                dataIn = null;
+        if(ssc != null) {
+            if(dataIn == null) {
+                try {
+                    dataIn = ssc.acceptAndOpen().openDataInputStream();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    dataIn = null;
+                }
             }
-        }
-        if(dataIn != null) {
-            try {
-                cam.setHotGoal(dataIn.readInt());
-//                input.addAxis(dataIn.readUTF(), dataIn.readDouble(), dataIn.readBoolean(),  dataIn.readBoolean());
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                dataIn = null;
+            if(dataIn != null) {
+                try {
+                    cam.setHotGoal(dataIn.readInt());
+    //                input.addAxis(dataIn.readUTF(), dataIn.readDouble(), dataIn.readBoolean(),  dataIn.readBoolean());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    dataIn = null;
+                }
             }
         }
     }

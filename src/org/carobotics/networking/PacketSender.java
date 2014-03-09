@@ -1,6 +1,7 @@
 package org.carobotics.networking;
 
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Vector;
 import javax.microedition.io.ServerSocketConnection;
 import org.carobotics.logic.RobotThread;
@@ -19,6 +20,23 @@ public class PacketSender extends RobotThread {
         super(period, threadManager);
         queued = new Vector();
         this.ssc = ssc;
+    }
+    
+    public void stop() {
+        try {
+            ssc.close();
+            ssc = null;
+        } catch (Exception e) { }
+    }
+    
+    public void stopRunning() {
+        super.stopRunning();
+        stop();
+    }
+    
+    public void onDestroy() {
+        super.onDestroy();
+        stop();
     }
     
     private void send(byte[] data) {
@@ -40,8 +58,10 @@ public class PacketSender extends RobotThread {
     }
     
     protected void cycle() {
-        for(int i = 0; i < queued.size(); i++) {
-            send((byte[])queued.elementAt(i));
+        if(ssc != null) {
+            for(int i = 0; i < queued.size(); i++) {
+                send((byte[])queued.elementAt(i));
+            }
         }
     }
 }
