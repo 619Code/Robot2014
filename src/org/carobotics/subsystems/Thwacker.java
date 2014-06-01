@@ -84,5 +84,5 @@ public class Thwacker {
     public DualInputSolenoid getBleedAir2(){
         return bleedAir2;
     }//end DualInputSolenoid getBleed2
-
+	
 }//end object Thwacker

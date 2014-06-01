@@ -40,7 +40,7 @@ public class MecanumDriveMappingThread extends RobotThread {
         //gets percentages (numbers from -1 to 1) from the joystick's axes used for driving
         double percent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent;
         double sidepercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_X) * scalePercent;
-        double turnpercent = 0;//driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_TWIST) * scalePercent;
+        double turnpercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_TWIST) * scalePercent;
         
         
         //needs to be fixed, as soon as joysticks are pushed in any direction, wheels don't stop even when not touching joysticks
