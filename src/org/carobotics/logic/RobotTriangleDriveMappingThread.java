@@ -37,8 +37,10 @@ public class RobotTriangleDriveMappingThread extends RobotThread {
         */
         
         double scalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Z);
-        double yScalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y);
-        double xScalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_X);
+        double yRightScalePercent = driverStation.getRightJoystick().getAxis(Joystick.Axis.AXIS_Y);
+        double xRightScalePercent = driverStation.getRightJoystick().getAxis(Joystick.Axis.AXIS_X);
+        double yLeftScalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y);
+        double xLeftScalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_X);
         
         if(scalePercent < 0.3) {
             scalePercent = 0.3;
@@ -50,38 +52,38 @@ public class RobotTriangleDriveMappingThread extends RobotThread {
         double rightPercent = driverStation.getRightJoystick().getAxis(Joystick.Axis.AXIS_Y) * rightScalePercent;
         double leftPercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y) * leftScalePercent;
          */
-        
-        if(yScalePercent > 0 && (xScalePercent >= -.2 && xScalePercent <= -.2)) {
-            //straight up
-            driveBase.getLeftTalon().set(ySpeed);
-            driveBase.getRightTalon().set(ySpeed);
+        if(xLeftScalePercent < .2 && xLeftScalePercent > -.2 && yLeftScalePercent < .2 && yLeftScalePercent > -.2 &&
+                xRightScalePercent < .2 && xRightScalePercent > -.2 && yRightScalePercent < .2 && yRightScalePercent > -.2){
+            driveBase.getLeftTalon().set(0);
+            driveBase.getRightTalon().set(0);
             driveBase.getBackTalon().set(0);
-        } else if (yScalePercent > .2 && (xScalePercent < -.2 && xScalePercent >= -1)) {
-            //left up
-            driveBase.getLeftTalon().set(ySpeed);
-            driveBase.getRightTalon().set(ySpeed /xSpeed);
-            driveBase.getBackTalon().set(xSpeed);
-        } else if (yScalePercent > .2 && (xScalePercent > .2 && xScalePercent <= 1)) {
-            //right up
-            driveBase.getLeftTalon().set(ySpeed);
-            driveBase.getRightTalon().set(ySpeed /xSpeed);
-            driveBase.getBackTalon().set(xSpeed);
-        } else if (xScalePercent <= -.2 && (yScalePercent <= .2 && yScalePercent >= -.2)) {
-            //straight left
-            driveBase.getLeftTalon().set(xSpeed);
-            driveBase.getRightTalon().set(xSpeed);
-            driveBase.getBackTalon().set(xSpeed);
-        } else if (xScalePercent >= .2 && (yScalePercent <= .2 && yScalePercent >= -.2)) {
-            //straight right
-            driveBase.getLeftTalon().set(xSpeed);
-            driveBase.getRightTalon().set(xSpeed);
-            driveBase.getBackTalon().set(xSpeed);
-        } else {
-        
+        }else if(yLeftScalePercent < -0.2 && yRightScalePercent < -0.2) {
+            //straight up
+            driveBase.getLeftTalon().set(yLeftScalePercent * scalePercent);
+            driveBase.getRightTalon().set(-yRightScalePercent * scalePercent);
+            driveBase.getBackTalon().set(0.0);
+            
+        }else if(yLeftScalePercent < -0.2){
+            driveBase.getLeftTalon().set(yLeftScalePercent * scalePercent);
+        }else if (yRightScalePercent < -0.2){
+            driveBase.getRightTalon().set(-yRightScalePercent * scalePercent);
         }
-       
+        
+//        else if(xScalePercent > 0.2){
+//            //turning left while sitting still
+//            driveBase.getLeftTalon().set(-.25);
+//            driveBase.getRightTalon().set(-.25);
+//            driveBase.getBackTalon().set(-.25);
+//        }else if(xScalePercent < -0.2){
+//            //turning right while sitting still
+//            driveBase.getLeftTalon().set(.25);
+//            driveBase.getRightTalon().set(.25);
+//            driveBase.getBackTalon().set(.25);
+//        }
+        
         if(DEBUG) {
-            System.out.println("[RobotTriangleDriveMappingThread] Y Percent: " + yScalePercent + " | X Percent: " + xScalePercent);
+            //System.out.println("[RobotTriangleDriveMappingThread] Y Percent: " + yScalePercent + " | X Percent: " + xScalePercent);
+            System.out.println("[RobotTriangleDriveMappingThread] Left Speed: " + driveBase.getLeftTalon() + " | Right Speed: " + driveBase.getRightTalon());
         }
     }
 }

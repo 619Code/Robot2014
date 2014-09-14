@@ -75,7 +75,7 @@ public class Robot2014LiftyThingOnly extends IterativeRobot{
         camera = new Servo(6);
         
         //subsystems
-        liftyThing = new LiftyThing(lifter, leadScrew, leadTop, leadBottom, liftTop, liftBottom); 
+        liftyThing = new LiftyThing(lifter, liftTop, liftBottom); 
         
     }
 

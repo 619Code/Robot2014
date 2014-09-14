@@ -34,7 +34,13 @@ public class LiftyThing {
         this.leadBottom = leadBottom;
         this.liftTop = liftTop;
         this.liftBottom = liftBottom;
-    }//end LiftyTHing constructor
+    }//end LiftyThing constructor
+    
+    public LiftyThing(Talon motor, DigitalInput liftTop, DigitalInput liftBottom){
+        this.motor = motor;
+        this.liftTop = liftTop;
+        this.liftBottom = liftBottom;
+    }//end LiftyThing constructor
 
     public Talon getMotor() {
         return motor;

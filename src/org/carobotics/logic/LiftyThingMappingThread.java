@@ -32,8 +32,8 @@ public class LiftyThingMappingThread extends RobotThread {
     
     protected void cycle() {
         
-        this.topLimit = liftyThing.isLimitLeadTop();
-        this.botLimit = liftyThing.isLimitLeadBottom();
+        //this.topLimit = liftyThing.isLimitLeadTop();
+        //this.botLimit = liftyThing.isLimitLeadBottom();
         
         double scalePercent = driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Z);
             if (scalePercent < 0.3)
@@ -52,9 +52,11 @@ public class LiftyThingMappingThread extends RobotThread {
             
             if(liftyThing.isLimitLiftBottom() && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) > 0) {
                 liftyThing.getMotor().set(0);
+                System.out.println("4");
                 //liftyThing.getMotor().setReversed(true);
             } else if(liftyThing.isLimitLiftTop() && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) < 0){
                 liftyThing.getMotor().set(0);
+                System.out.println("3");
                 //liftyThing.getMotor().setReversed(false);
             } else {
                 liftyThing.getMotor().set(driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent);
@@ -69,18 +71,18 @@ public class LiftyThingMappingThread extends RobotThread {
        
        */
         
-        double input = driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent;
-        
-        Talon leadScrew = liftyThing.getLeadScrew();
-        
-        //System.out.println("input: " + input + "\ttopLmit: " + topLimit + "\tbotLimit: " + botLimit);
-        
-        if((input > 0 && !topLimit) || (input < 0 && !botLimit)) {
-            //System.out.println("first: " + (input > 0 && !topLimit) + "\tsecond: " + (input < 0 && !botLimit));
-            leadScrew.set(input);
-        } else {
-            leadScrew.set(0);
-        }
+//        double input = driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent;
+//        
+//        Talon leadScrew = liftyThing.getLeadScrew();
+//        
+//        //System.out.println("input: " + input + "\ttopLmit: " + topLimit + "\tbotLimit: " + botLimit);
+//        
+//        if((input > 0 && !topLimit) || (input < 0 && !botLimit)) {
+//            //System.out.println("first: " + (input > 0 && !topLimit) + "\tsecond: " + (input < 0 && !botLimit));
+//            leadScrew.set(input);
+//        } else {
+//            leadScrew.set(0);
+//        }
        
     }//end cycle
 }//end class

@@ -1,6 +1,6 @@
-MIDlet-Name: Robot2013TalonDriveOnly
+MIDlet-Name: TriangleRobot2014
 MIDlet-Version: 1.0.0
 MIDlet-Vendor: FIRST
-MIDlet-1: Robot2013TalonDriveOnly, , org.carobotics.main.Robot2013TalonDriveOnly
+MIDlet-1: TriangleRobot2014, , org.carobotics.main.TriangleRobot2014
 MicroEdition-Profile: IMP-1.0
 MicroEdition-Configuration: CLDC-1.1

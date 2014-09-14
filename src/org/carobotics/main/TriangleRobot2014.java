@@ -19,7 +19,7 @@ import org.carobotics.subsystems.RobotTriangleBase;
  *
  * @author Student
  */
-public class TriangleRobot2014 {
+public class TriangleRobot2014 extends IterativeRobot {
     
     FourStickDriverStation driverStation;
     RobotTriangleBase driveBase;
@@ -34,7 +34,7 @@ public class TriangleRobot2014 {
         System.out.println("\n");// shows code is working
         System.out.println("//////////////////////////////////////////////////////");
         System.out.println("// Cavalier Robotics                     TEAM 619   //");
-        System.out.println("// 2014 Main Code                                   //");
+        System.out.println("// 2014 Triangle Robot                              //");
         System.out.println("//////////////////////////////////////////////////////\n");
 
         // Create all robot subsystems (i.e. stuff from org.carobotics.subsystems)
@@ -50,6 +50,17 @@ public class TriangleRobot2014 {
         driveBase = new RobotTriangleBase(leftDrive, rightDrive, backDrive);
     }
     
+    public void autonomousInit() {
+        
+        threadManager.killAllThreads(); // DO NOT REMOVE!!!
+    }
+
+    /**
+     * This function is called periodically during autonomous
+     */
+    public void autonomousPeriodic() {
+    }
+    
     public void teleopInit() {
         threadManager.killAllThreads(); // DO NOT REMOVE!!!
         
@@ -63,7 +74,19 @@ public class TriangleRobot2014 {
 
     }
     
+    public void teleopPeriodic() {
+    }
+
+    public void teleopContinuous() {
+    }
+    
     public void disabledInit() {
         threadManager.killAllThreads(); // DO NOT REMOVE!!!
     }
+    
+    public void disabledPeriodic() {
+    }
+
+    public void disabledContinuous() {
+    } 
 }

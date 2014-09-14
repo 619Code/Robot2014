@@ -9,7 +9,6 @@ package org.carobotics.main;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import org.carobotics.hardware.Talon;
-import org.carobotics.logic.AutonomousBumpThread;
 import org.carobotics.logic.DumperMappingThread;
 import org.carobotics.logic.TalonFanThread;
 import org.carobotics.logic.TalonTankDriveMappingThread;
@@ -26,7 +25,7 @@ import org.carobotics.subsystems.FourStickDriverStation;
  * directory.
  */
 public class Robot2013TalonDriveOnly extends IterativeRobot {
-     // Robot Systems (stuff from org.carobotics.subsystems)
+    // Robot Systems (stuff from org.carobotics.subsystems)
     FourStickDriverStation driverStation;
     //FrisbeeDumper dumper;
     AutonomousSelector autonomousSelector;
@@ -50,7 +49,7 @@ public class Robot2013TalonDriveOnly extends IterativeRobot {
         System.out.println("\n");
         System.out.println("//////////////////////////////////////////////////////");
         System.out.println("//     Cavalier Robotics                 TEAM 619   //");
-        System.out.println("//     2013 Talon                                   //");
+        System.out.println("//     2013 Talon Drive Only                        //");
         System.out.println("//////////////////////////////////////////////////////\n");
         
         // Create all robot subsystems (i.e. stuff from org.carobotics.subsystems)
@@ -73,10 +72,6 @@ public class Robot2013TalonDriveOnly extends IterativeRobot {
         }
          *
          */
-        
-        
-       
-      
     }
 
     /**
