@@ -37,10 +37,14 @@ public class MecanumDriveMappingThread extends RobotThread {
         double scalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Z);  //fix
         if(scalePercent < 0.3) scalePercent = 0.3;
         
+        double xAxis = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_X);
+        double yAxis = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y);
+        double twistAxis = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_TWIST);
+        
         //gets percentages (numbers from -1 to 1) from the joystick's axes used for driving
-        double percent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent;
-        double sidepercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_X) * scalePercent;
-        double turnpercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_TWIST) * scalePercent;
+        double percent = yAxis * scalePercent;
+        double sidepercent = xAxis * scalePercent;
+        double turnpercent = twistAxis * scalePercent;
         
         
         //needs to be fixed, as soon as joysticks are pushed in any direction, wheels don't stop even when not touching joysticks
@@ -51,10 +55,17 @@ public class MecanumDriveMappingThread extends RobotThread {
         double bottomRightpercent = percent + sidepercent + turnpercent;
         
         try {
-            mecanumDriveBase.getTopleftTalon().set(topLeftpercent);
-            mecanumDriveBase.getToprightTalon().set(topRightpercent);
-            mecanumDriveBase.getBottomleftTalon().set(bottomLeftpercent);
-            mecanumDriveBase.getBottomrightTalon().set(bottomRightpercent);
+            if(xAxis > -0.2 && xAxis < 0.2 && yAxis > -0.2 && yAxis < 0.2 && twistAxis > -0.2 && twistAxis < 0.2){
+                mecanumDriveBase.getTopleftTalon().set(0);
+                mecanumDriveBase.getToprightTalon().set(0);
+                mecanumDriveBase.getBottomleftTalon().set(0);
+                mecanumDriveBase.getBottomrightTalon().set(0);
+            }else{
+                mecanumDriveBase.getTopleftTalon().set(topLeftpercent);
+                mecanumDriveBase.getToprightTalon().set(topRightpercent);
+                mecanumDriveBase.getBottomleftTalon().set(bottomLeftpercent);
+                mecanumDriveBase.getBottomrightTalon().set(bottomRightpercent);
+            }
         } catch (Exception e) {
             if (firstError || DEBUG) {
                 e.printStackTrace();

@@ -36,49 +36,63 @@ public class RobotTriangleDriveMappingThread extends RobotThread {
         double leftScalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Z);
         */
         
-        double scalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Z);
+        double scalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_THROTTLE);
         double yRightScalePercent = driverStation.getRightJoystick().getAxis(Joystick.Axis.AXIS_Y);
         double xRightScalePercent = driverStation.getRightJoystick().getAxis(Joystick.Axis.AXIS_X);
         double yLeftScalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y);
         double xLeftScalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_X);
         
+        double leftSpeed;
+        double rightSpeed;
+        double backSpeed;
+        
         if(scalePercent < 0.3) {
             scalePercent = 0.3;
         }
         
-        double ySpeed = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent;
-        double xSpeed = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_X) * scalePercent;
-        /*
-        double rightPercent = driverStation.getRightJoystick().getAxis(Joystick.Axis.AXIS_Y) * rightScalePercent;
-        double leftPercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y) * leftScalePercent;
-         */
+        //working on simple equation to replace series of else-if statements above for faster and smoother driving
+        leftSpeed = yLeftScalePercent;
+        rightSpeed = -yRightScalePercent;
+        backSpeed = xLeftScalePercent;
+        
         if(xLeftScalePercent < .2 && xLeftScalePercent > -.2 && yLeftScalePercent < .2 && yLeftScalePercent > -.2 &&
                 xRightScalePercent < .2 && xRightScalePercent > -.2 && yRightScalePercent < .2 && yRightScalePercent > -.2){
             driveBase.getLeftTalon().set(0);
             driveBase.getRightTalon().set(0);
             driveBase.getBackTalon().set(0);
-        }else if(yLeftScalePercent < -0.2 && yRightScalePercent < -0.2) {
-            //straight up
-            driveBase.getLeftTalon().set(yLeftScalePercent * scalePercent);
-            driveBase.getRightTalon().set(-yRightScalePercent * scalePercent);
-            driveBase.getBackTalon().set(0.0);
-            
-        }else if(yLeftScalePercent < -0.2){
-            driveBase.getLeftTalon().set(yLeftScalePercent * scalePercent);
-        }else if (yRightScalePercent < -0.2){
-            driveBase.getRightTalon().set(-yRightScalePercent * scalePercent);
-        }
+        }else{
+            driveBase.getLeftTalon().set(leftSpeed);
+            driveBase.getRightTalon().set(rightSpeed);
+            driveBase.getBackTalon().set(backSpeed);
+        }       
         
-//        else if(xScalePercent > 0.2){
-//            //turning left while sitting still
-//            driveBase.getLeftTalon().set(-.25);
-//            driveBase.getRightTalon().set(-.25);
-//            driveBase.getBackTalon().set(-.25);
-//        }else if(xScalePercent < -0.2){
-//            //turning right while sitting still
-//            driveBase.getLeftTalon().set(.25);
-//            driveBase.getRightTalon().set(.25);
-//            driveBase.getBackTalon().set(.25);
+        //        if(xLeftScalePercent < .2 && xLeftScalePercent > -.2 && yLeftScalePercent < .2 && yLeftScalePercent > -.2 &&
+//                xRightScalePercent < .2 && xRightScalePercent > -.2 && yRightScalePercent < .2 && yRightScalePercent > -.2){
+//            //makes robot stop if the joystick is in specified dead zone
+//            driveBase.getLeftTalon().set(0);
+//            driveBase.getRightTalon().set(0);
+//            driveBase.getBackTalon().set(0);
+//        }else if(yLeftScalePercent < -0.2 && yRightScalePercent < -0.2) {
+//            //straight
+//            driveBase.getLeftTalon().set(yLeftScalePercent * scalePercent);
+//            driveBase.getRightTalon().set(-yRightScalePercent * scalePercent);
+//            driveBase.getBackTalon().set(0.0);
+//        }else if(yLeftScalePercent < -0.2){
+//            //make left wheel go forward
+//            driveBase.getLeftTalon().set(yLeftScalePercent * scalePercent);
+//        }else if (yRightScalePercent < -0.2){
+//            //make right wheel go forward
+//            driveBase.getRightTalon().set(-yRightScalePercent * scalePercent);
+//        }else if(xLeftScalePercent > 0.2 && xRightScalePercent > 0.2){
+//            //spin right
+//            driveBase.getLeftTalon().set(xLeftScalePercent * scalePercent);
+//            driveBase.getRightTalon().set(xLeftScalePercent * scalePercent);
+//            driveBase.getBackTalon().set(xLeftScalePercent * scalePercent);
+//        }else if(xLeftScalePercent < -0.2 && xRightScalePercent < -0.2){
+//            //spin left
+//            driveBase.getLeftTalon().set(-xLeftScalePercent * scalePercent);
+//            driveBase.getRightTalon().set(-xLeftScalePercent * scalePercent);
+//            driveBase.getBackTalon().set(-xLeftScalePercent * scalePercent);
 //        }
         
         if(DEBUG) {
