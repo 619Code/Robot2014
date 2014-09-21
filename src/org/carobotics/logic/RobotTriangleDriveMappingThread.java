@@ -29,6 +29,7 @@ public class RobotTriangleDriveMappingThread extends RobotThread {
         this.driveBase = driveBase;
         this.driverStation = driverStation;
     }
+ 
     
     protected void cycle() {
         /*
