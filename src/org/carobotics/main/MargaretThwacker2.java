@@ -42,11 +42,9 @@ public class MargaretThwacker2 extends IterativeRobot{
     // Robot Systems (stuff from org.carobotics.subsystems)
     Compressor comp;
     Talon leftDrive, rightDrive;
-    Talon leadScrew;
     Talon lifter;
     Relay compRelay;
     Servo camera;
-    DigitalInput leadTop, leadBottom;
     DigitalInput liftTop, liftBottom;
     DigitalInput pressureSwitch;
     Thwacker thwacker;
@@ -67,8 +65,6 @@ public class MargaretThwacker2 extends IterativeRobot{
     ThwackingAction thwackingAction;
     LiftyThingAction liftyAction;
     // Networking
-    Networking network;
-    RemoteProcessedCamera cam;
     
     
     /**

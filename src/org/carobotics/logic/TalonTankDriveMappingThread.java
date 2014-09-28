@@ -27,20 +27,17 @@ public class TalonTankDriveMappingThread extends RobotThread {
     }
 
     protected void cycle() {
-        double rightScalePercent = driverStation.getRightJoystick().getAxis(Joystick.Axis.AXIS_Z);
         double leftScalePercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Z);
         
-        if(rightScalePercent < 0.3) {
-            rightScalePercent = 0.3;
-        }
         if(leftScalePercent < 0.3){
-            rightScalePercent = 0.3;
+            leftScalePercent = 0.3;
         }
 
-        double rightPercent = driverStation.getRightJoystick().getAxis(Joystick.Axis.AXIS_Y) * rightScalePercent;
+        double rightPercent = driverStation.getRightJoystick().getAxis(Joystick.Axis.AXIS_Y) * leftScalePercent;
         double leftPercent = driverStation.getLeftJoystick().getAxis(Joystick.Axis.AXIS_Y) * leftScalePercent;
 
         driveBase.getLeftTalon().set(leftPercent);
+        driveBase.getRightTalon().setReversed(true);
         driveBase.getRightTalon().set(rightPercent);
         
         if(driveBase.getLeftTalon2() != null && driveBase.getRightTalon2() != null){

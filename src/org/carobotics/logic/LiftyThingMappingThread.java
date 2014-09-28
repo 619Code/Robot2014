@@ -20,8 +20,9 @@ import org.carobotics.subsystems.FourStickDriverStation;
 public class LiftyThingMappingThread extends RobotThread {
     
     protected FourStickDriverStation driverStation;
-    private boolean topLimit;
-    private boolean botLimit;
+    private boolean primaryAtTop, primaryAtBottom;
+    private boolean secondaryAtTop, secondaryAtBottom;
+    private boolean tertiaryOut, tertiaryIn;
     private LiftyThing liftyThing;
     
     public LiftyThingMappingThread(LiftyThing liftyThing, FourStickDriverStation driverStation, int period, ThreadManager threadManager){
@@ -32,58 +33,68 @@ public class LiftyThingMappingThread extends RobotThread {
     
     protected void cycle() {
         
-        //this.topLimit = liftyThing.isLimitLeadTop();
-        //this.botLimit = liftyThing.isLimitLeadBottom();
-        
-        double scalePercent = driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Z);
-            if (scalePercent < 0.3)
-                scalePercent = 0.3;
-        
-        /*
-        
-        For window motor:
-        
-        */
-        
-        //as long as you are pressing the button and moving the joystick, the 
-        //lift will change, the second you let go of the button the joystick 
-        //will stop moving the lift
-        if (driverStation.getFourthJoystick().getButton(Joystick.Button.BUTTON2)) {
+        if(driverStation.getThirdJoystick().getButton(Joystick.Button.BUTTON1)){
+            System.out.println("Button Pressed");
             
-            if(liftyThing.isLimitLiftBottom() && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) > 0) {
-                liftyThing.getMotor().set(0);
-                System.out.println("4");
-                //liftyThing.getMotor().setReversed(true);
-            } else if(liftyThing.isLimitLiftTop() && driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) < 0){
-                liftyThing.getMotor().set(0);
-                System.out.println("3");
-                //liftyThing.getMotor().setReversed(false);
-            } else {
-                liftyThing.getMotor().set(driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent);
-            }
-        }else{
-           liftyThing.getMotor().set(0);
-        }//if-else
+            if(primaryAtTop){
+                System.out.println("Primary mechanism is already at the top");
+            }else{
+                while(!liftyThing.isLimitLiftTop()){
+                    liftyThing.getMotor().set(.25);
+                }//end while
+                primaryAtTop = true;
+                primaryAtBottom = false;
+            }//end if:else
+            
+            if(secondaryAtTop){
+                System.out.println("Secondary mechanism is already at the top");
+            }else{
+                while(!liftyThing.isLimitLiftTop2()){
+                    liftyThing.getMotor2().set(.25);
+                }//end while
+                secondaryAtTop = true;
+                secondaryAtBottom = false;
+            }//end if:else
+            
+            if(tertiaryOut){
+                System.out.println("Tertiary mechanism is already out");
+            }else{
+                liftyThing.setTertiaryMechanism(true);
+                tertiaryOut = true;
+                tertiaryIn = false;
+            }//end if:else
+                
+        }//end if
+       
+        if(driverStation.getThirdJoystick().getButton(Joystick.Button.TRIGGER)){
+            System.out.println("Trigger pulled");
+            
+            if(tertiaryIn){
+                System.out.println("Tertiary mechanism is already in");
+            }else{
+                liftyThing.setTertiaryMechanism(false);
+                tertiaryOut = false;
+                tertiaryIn = true;
+            }//end if:else
+            
+            if(secondaryAtBottom){
+                System.out.println("Secondary mechanism is already at the bottom");
+            }else{
+                while(!liftyThing.isLimitLiftBottom2()){
+                    liftyThing.getMotor2().set(-.25);
+                }//end while
+            }//end if:else
+            
+            if(primaryAtBottom){
+                System.out.println("Primary mechanism is already at the bottom");
+            }else{
+                while(!liftyThing.isLimitLiftBottom()){
+                    liftyThing.getMotor().set(-.25);
+                }//end while
+            }//end if:else
+            
+        }//end if
         
-        /*
-       
-       For lead screw:
-       
-       */
-        
-//        double input = driverStation.getFourthJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent;
-//        
-//        Talon leadScrew = liftyThing.getLeadScrew();
-//        
-//        //System.out.println("input: " + input + "\ttopLmit: " + topLimit + "\tbotLimit: " + botLimit);
-//        
-//        if((input > 0 && !topLimit) || (input < 0 && !botLimit)) {
-//            //System.out.println("first: " + (input > 0 && !topLimit) + "\tsecond: " + (input < 0 && !botLimit));
-//            leadScrew.set(input);
-//        } else {
-//            leadScrew.set(0);
-//        }
-       
     }//end cycle
 }//end class
 

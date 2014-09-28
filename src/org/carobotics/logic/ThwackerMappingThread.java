@@ -33,22 +33,18 @@ public class ThwackerMappingThread extends RobotThread{
         double scalePercent = driverStation.getThirdJoystick().getAxis(Joystick.Axis.AXIS_Z);
             if (scalePercent < 0.3)
                 scalePercent = 0.3;
-            
-        thwacker.getCamera().set(driverStation.getThirdJoystick().getAxis(Joystick.Axis.AXIS_Y) * scalePercent);
         
-        if(driverStation.getThirdJoystick().getButton(Joystick.Button.TRIGGER)){
+        if(driverStation.getFourthJoystick().getButton(Joystick.Button.TRIGGER)){
             if(shootersReady){
                 thwacker.fire();
                 shootersReady = false;
             }
         } 
         else {
-            //if pneumatics are messing up and not working then delete thwacker.reset();
-            thwacker.reset();
             shootersReady = true;
         }
         
-        if(driverStation.getThirdJoystick().getButton(Joystick.Button.BUTTON2)){
+        if(driverStation.getFourthJoystick().getButton(Joystick.Button.BUTTON1)){
             thwacker.reset();
             shootersReady = true;
         }//end if
